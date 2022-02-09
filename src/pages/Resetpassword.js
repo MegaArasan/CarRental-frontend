@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../redux/actions/userActions";
+import { userResetpass } from "../redux/actions/userActions";
 import { Typography, TextField, Button, IconButton } from "@mui/material";
-import { useHistory } from "react-router-dom";
 import { InputAdornment, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useParams } from "react-router-dom";
 
-function Login() {
-  const history = useHistory();
+function Resetpassword() {
+  const userId = useParams().userId;
+  const token = useParams().token;
   const dispatch = useDispatch();
   const { handleChange, handleSubmit, handleBlur, errors, values, touched } =
     useFormik({
       initialValues: {
-        email: "",
         password: "",
+        confirmPassword: "",
+        userId: userId,
+        token: token,
       },
       validationSchema: formvalidationSchema,
       onSubmit: (values) => {
-        dispatch(userLogin(values));
+        dispatch(userResetpass(values));
         console.log(values);
       },
     });
@@ -33,7 +36,7 @@ function Login() {
     setText((text) => (text === "Show" ? "Hide" : "Show"));
   };
   return (
-    <div className="loginpage">
+    <div className="resetpage">
       <div className="brand">
         <Typography
           sx={{
@@ -57,24 +60,10 @@ function Login() {
                 fontSize: { sm: "35px", xs: "28px" },
               }}
             >
-              Log In
+              Reset Password
             </Typography>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <TextField
-              variant="outlined"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.email && touched.email}
-              value={values.email}
-              helperText={errors.email && touched.email && errors.email}
-              name="email"
-              id="email"
-              label="Email"
-              placeholder="Enter Email"
-              fullWidth
-              sx={{ margin: "5px" }}
-            />
             <TextField
               variant="outlined"
               onChange={handleChange}
@@ -103,26 +92,38 @@ function Login() {
               }}
               sx={{ margin: "5px" }}
             />
-            <Button
-              sx={{ marginRight: "20px" }}
-              variant="text"
-              onClick={() => history.push("/forgotpassword")}
-            >
-              Forgot Password?
-            </Button>
+            <TextField
+              variant="outlined"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.confirmPassword && touched.confirmPassword}
+              value={values.confirmPassword}
+              helperText={
+                errors.confirmPassword &&
+                touched.confirmPassword &&
+                errors.confirmPassword
+              }
+              name="confirmPassword"
+              id="confirmPassword"
+              label="confirm password"
+              type={visible}
+              placeholder="Enter confirm Password"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <Tooltip title={text}>
+                      <IconButton onClick={() => visibility()}>
+                        {icon}
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ margin: "5px" }}
+            />
             <Button type="submit" variant="contained" color="success">
-              Log In
-            </Button>
-          </div>
-          <div style={{ margin: "5px" }}>
-            <label className="account">Don't have an Account?</label>
-            <Button
-              type="submit"
-              color="inherit"
-              variant="text"
-              onClick={() => history.push("/register")}
-            >
-              Register
+              Update password
             </Button>
           </div>
         </form>
@@ -131,10 +132,12 @@ function Login() {
   );
 }
 
-export default Login;
+export default Resetpassword;
 
 const formvalidationSchema = Yup.object({
-  email: Yup.string()
-    .email("Please enter the valid email")
-    .required("Required Field"),
+  password: Yup.string().required("Required Field"),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Password must match"
+  ),
 });

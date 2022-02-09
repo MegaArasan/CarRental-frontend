@@ -1,18 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500?family=Great+Vibes&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Aladin?family=Roboto+condensed&display=swap");
+
 .App {
   text-align: center;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.loginpage,
+.registerpage,
+.forgotpage,
+.resetpage {
   display: flex;
-  flex-direction: column;
+  height: 100vh;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-evenly;
+  background-image: url("./assets/car-background.jpg");
+  background-size: cover;
+}
+.formcontainer {
+  display: flex;
+  max-width: 350px;
+  flex-direction: column;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.App-link {
-  color: #61dafb;
+@media (max-width: 625px) {
+  .loginpage,
+  .registerpage,
+  .forgotpage,
+  .resetpage {
+    display: flex;
+    flex-direction: column;
+  }
 }

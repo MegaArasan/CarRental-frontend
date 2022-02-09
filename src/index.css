@@ -4,25 +4,12 @@ body {
   font-family: "Xanh Mono", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:bisque;
+  background-color: bisque;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-.bs1 {
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-}
-h1 {
-  font-size: 30px;
-  font-weight: bold;
-  color: rgb(30, 16, 221);
-}
-.header {
-  padding: 10px;
- 
 }
 .content {
   min-height: 90vh;

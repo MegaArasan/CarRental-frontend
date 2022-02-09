@@ -1,18 +1,39 @@
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/Home.js";
 import Login from "./pages/Login.js";
 import Register from "./pages/Register.js";
 import BookingCar from "./pages/BookingCar.js";
+import Forgotpassword from "./pages/Forgotpassword.js";
+import Resetpassword from "./pages/Resetpassword.js";
+import Navbar from "./components/Navbar.js";
+import Paper from "@mui/material/Paper";
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
-        <Route path="/bookingcar" exact component={BookingCar} />
+        <Route path="/forgotpassword" exact component={Forgotpassword} />
+        <Route
+          path="/resetpassword/:userId/:token"
+          exact
+          component={Resetpassword}
+        />
+        <>
+          <Paper
+            elevation={0}
+            style={{ borderStyle: "none", minHeight: "100vh" }}
+          >
+            <Navbar />
+            <Route path="/home" exact component={Home} />
+            <Route path="/bookingcar" exact component={BookingCar} />
+          </Paper>
+        </>
       </Switch>
     </div>
   );
