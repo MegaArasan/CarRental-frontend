@@ -52,9 +52,9 @@ function UserBookings() {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  {/* <Typography variant="p">
-                      Transaction Id : <b>{booking.transactionId}</b>
-                    </Typography> */}
+                  <Typography variant="p">
+                    Transaction Id : <b>{booking.transactionId}</b>
+                  </Typography>
                   <Typography variant="p">
                     From: <b>{booking.bookedTimeSlots.from}</b>
                   </Typography>

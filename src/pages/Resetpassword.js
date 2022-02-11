@@ -24,7 +24,7 @@ function Resetpassword() {
       validationSchema: formvalidationSchema,
       onSubmit: (values) => {
         dispatch(userResetpass(values));
-        console.log(values);
+        // console.log(values);
       },
     });
   const [text, setText] = useState("Show");

@@ -24,7 +24,7 @@ function Register() {
       validationSchema: formvalidationSchema,
       onSubmit: (values) => {
         dispatch(userRegister(values));
-        console.log(values);
+        // console.log(values);
       },
     });
   const [text, setText] = useState("Show");

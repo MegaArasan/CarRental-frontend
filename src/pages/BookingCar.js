@@ -45,7 +45,7 @@ function BookingCar({ match }) {
       setcar(cars.find((o) => o._id === match.params.carid));
     }
   }, [cars]);
-  console.log(car);
+  // console.log(car);
 
   return car ? <BookCar car={car} /> : <CircularProgress color="inherit" />;
 }
@@ -63,7 +63,7 @@ function BookCar({ car }) {
   const [value, setvalue] = useState([null, null]);
   const rent = car.rentPerHour;
   useEffect(() => {
-    console.log(totalHours, totalAmount, rent);
+    // console.log(totalHours, totalAmount, rent);
     setTotalAmount(totalHours * rent);
   }, [driver, totalHours, rent]);
   useEffect(() => {
@@ -106,7 +106,7 @@ function BookCar({ car }) {
 
     const data1 = JSON.parse(localStorage.getItem("order"));
     const data = data1.data;
-    console.log(data);
+    // console.log(data1);
     const options = {
       key: "rzp_test_wt6S48PF3wQ702",
       amount: data.amount,
@@ -116,7 +116,10 @@ function BookCar({ car }) {
       image:
         "https://image.shutterstock.com/z/stock-vector-king-car-logo-design-template-vector-illustration-466912277.jpg",
       order_id: data.id,
-      callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+      handler: function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)},
       prefill: {
         username,
       },
@@ -156,6 +159,7 @@ function BookCar({ car }) {
           <br />
           <Button
             className="btn1 mt-2"
+            variant="outlined"
             onClick={() => {
               setShowModal(true);
             }}
@@ -188,7 +192,9 @@ function BookCar({ car }) {
               {/* <label></label> */}
 
               <h3>Total Amount : {totalAmount}</h3>
-              <Button onClick={() => onSubmit()}>Book Now</Button>
+              <Button variant="outlined" onClick={() => onSubmit()}>
+                Book Now
+              </Button>
             </div>
           )}
         </div>

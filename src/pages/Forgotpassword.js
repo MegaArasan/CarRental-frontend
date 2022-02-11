@@ -15,7 +15,7 @@ function Forgotpassword() {
       validationSchema: formvalidationSchema,
       onSubmit: (values) => {
         dispatch(userForgotpass(values));
-        console.log(values);
+        // console.log(values);
       },
     });
   return (
@@ -88,4 +88,3 @@ const formvalidationSchema = Yup.object({
     .email("Please enter the valid email")
     .required("Required Field"),
 });
-
