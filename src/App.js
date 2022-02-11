@@ -8,6 +8,7 @@ import Forgotpassword from "./pages/Forgotpassword.js";
 import Resetpassword from "./pages/Resetpassword.js";
 import Navbar from "./components/Navbar.js";
 import Paper from "@mui/material/Paper";
+import UserBookings from "./pages/UserBookings";
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
           >
             <Navbar />
             <Route path="/home" exact component={Home} />
-            <Route path="/bookingcar" exact component={BookingCar} />
+            <Route path='/booking/:carid' exact component={BookingCar} />
+            <Route path="/userbookings" exact component={UserBookings} />
           </Paper>
         </>
       </Switch>

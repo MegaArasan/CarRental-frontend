@@ -159,7 +159,7 @@ function Register() {
             <Button
               color="success"
               variant="text"
-              onClick={() => history.push("/signup")}
+              onClick={() => history.push("/login")}
             >
               Log In
             </Button>

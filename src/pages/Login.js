@@ -117,7 +117,6 @@ function Login() {
           <div style={{ margin: "5px" }}>
             <label className="account">Don't have an Account?</label>
             <Button
-              type="submit"
               color="inherit"
               variant="text"
               onClick={() => history.push("/register")}
