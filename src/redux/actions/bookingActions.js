@@ -27,7 +27,7 @@ export const getAllBookings = () => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    // window.alert(error);
     dispatch({ type: "LOADING", payload: false });
   }
 };
