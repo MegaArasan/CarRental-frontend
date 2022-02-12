@@ -28,7 +28,7 @@ export const userRegister = (reqObj) => async (dispatch) => {
     }, 500);
   } catch (error) {
     console.log(error);
-    window.alert(error.msg);
+    window.alert("Email already exist");
     dispatch({ type: "LOADING", payload: false });
   }
 };
