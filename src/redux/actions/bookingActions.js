@@ -16,7 +16,7 @@ export const bookCar = (reqObj) => async (dispatch) => {
     // }, 500);
   } catch (error) {
     console.log(error);
-    window.alert(error.msg);
+    window.alert(error);
     dispatch({ type: "LOADING", payload: false });
   }
 };
@@ -30,7 +30,7 @@ export const getAllBookings = () => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
     console.log(error);
-    window.alert(error.msg);
+    window.alert(error);
     dispatch({ type: "LOADING", payload: false });
   }
 };
