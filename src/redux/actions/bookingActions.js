@@ -10,10 +10,7 @@ export const bookCar = (reqObj) => async (dispatch) => {
       localStorage.setItem("order", JSON.stringify(data));
     });
 
-    dispatch({ type: "LOADING", payload: false });
-    // setTimeout(() => {
-    //   window.location.href = "/userbookings";
-    // }, 500);
+    dispatch({ type: "LOADING", payload: false });    
   } catch (error) {
     console.log(error);
     window.alert(error);

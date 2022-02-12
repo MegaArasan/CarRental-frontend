@@ -116,14 +116,10 @@ function BookCar({ car }) {
       image:
         "https://image.shutterstock.com/z/stock-vector-king-car-logo-design-template-vector-illustration-466912277.jpg",
       order_id: data.id,
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-      },
       prefill: {
-        name:username,
-        phoneno:user.phoneno,
+        name: username,
+        contact: user.phoneno,
+        email: user.email,
       },
     };
     const paymentObject = new window.Razorpay(options);
