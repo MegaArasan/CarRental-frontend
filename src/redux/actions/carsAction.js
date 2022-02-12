@@ -9,7 +9,7 @@ export const getAllCars = () => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(error.msg);
     dispatch({ type: "LOADING", payload: false });
   }
 };

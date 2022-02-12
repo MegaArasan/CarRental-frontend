@@ -12,7 +12,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
     }, 500);
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(error.msg);
     dispatch({ type: "LOADING", payload: false });
   }
 };
@@ -28,7 +28,7 @@ export const userRegister = (reqObj) => async (dispatch) => {
     }, 500);
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(error.msg);
     dispatch({ type: "LOADING", payload: false });
   }
 };
@@ -48,7 +48,7 @@ export const userForgotpass = (reqObj) => async (dispatch) => {
     }, 2000);
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(error.msg);
     dispatch({ type: "LOADING", payload: false });
   }
 };
@@ -68,7 +68,7 @@ export const userResetpass = (reqObj) => async (dispatch) => {
     }, 500);
   } catch (error) {
     console.log(error);
-    window.alert(error);
+    window.alert(error.msg);
     dispatch({ type: "LOADING", payload: false });
   }
 };
