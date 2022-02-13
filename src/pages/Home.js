@@ -31,55 +31,12 @@ function Home() {
   useEffect(() => {
     setTotalcars(cars);
   }, [cars]);
-  function setFilter(values) {
-    setValue(values);
-    var selectedFrom = moment(values[0], "MMM DD yyyy HH:mm");
-    var selectedTo = moment(values[1], "MMM DD yyyy HH:mm");
 
-    var temp = [];
-
-    for (var car of cars) {
-      if (car.bookedTimeSlots.length === 0) {
-        temp.push(car);
-      } else {
-        for (var booking of car.bookedTimeSlots) {
-          if (
-            selectedFrom.isBetween(booking.from, booking.to) ||
-            selectedTo.isBetween(booking.from, booking.to) ||
-            moment(booking.from).isBetween(selectedFrom, selectedTo) ||
-            moment(booking.to).isBetween(selectedFrom, selectedTo)
-          ) {
-          } else {
-            temp.push(car);
-          }
-        }
-      }
-    }
-
-    setTotalcars(temp);
-  }
   if (!user) {
     history.push("/");
   }
   return (
     <Box>
-      <div style={{ margin: "12px" }}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <MobileDateRangePicker
-            startText="start Date"
-            value={value}
-            onChange={setFilter}
-            renderInput={(startProps, endProps) => (
-              <React.Fragment>
-                <TextField {...startProps} />
-                <Box sx={{ mx: 2 }}> to </Box>
-                <TextField {...endProps} />
-              </React.Fragment>
-            )}
-          />
-        </LocalizationProvider>
-      </div>
-
       <section className="bodycontent">
         {totalCars ? (
           totalCars.map((car) => {
