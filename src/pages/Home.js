@@ -17,7 +17,6 @@ function Home() {
   const history = useHistory();
   const { cars } = useSelector((state) => state.carsReducer);
   const [totalCars, setTotalcars] = useState([]);
-  const [value, setValue] = React.useState([null, null]);
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
