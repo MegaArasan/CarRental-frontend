@@ -12,6 +12,7 @@ import {
   Checkbox,
   Dialog,
   CircularProgress,
+  Typography,
   FormControlLabel,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -132,95 +133,119 @@ function BookCar({ car }) {
           <img src={car.image} alt={car.name} className="carimage" />
         </div>
         <div className="info">
-          <Divider type="horizontal">Car Info</Divider>
+          {/* <Divider type="horizontal">Car Info</Divider> */}
+          <Typography variant="h5">
+            <b>Car Info</b>
+          </Typography>
           <div style={{ textAlign: "center" }}>
-            <p>{car.name}</p>
-            <p>₹{car.rentPerHour} Rent Per hour /-</p>
-            <p>Fuel Type : {car.fuelType}</p>
-            <p>Max Persons : {car.capacity}</p>
+            <h6>
+              <b>{car.name}</b>
+            </h6>
+            <h6>
+              ₹{car.rentPerHour} <b>Rent Per hour</b> /-
+            </h6>
+            <h6>
+              <b>Fuel Type : </b>
+              {car.fuelType}
+            </h6>
+            <h6>
+              <b>Max Persons : </b>
+              {car.capacity}
+            </h6>
           </div>
-          <Divider type="horizontal">Select Time Slots</Divider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MobileDateRangePicker
-              startText="start Date"
-              value={value}
-              onChange={selectTimeSlots}
-              renderInput={(startProps, endProps) => (
-                <React.Fragment>
-                  <TextField {...startProps} />
-                  <Box sx={{ mx: 2 }}> to </Box>
-                  <TextField {...endProps} />
-                </React.Fragment>
-              )}
-            />
-          </LocalizationProvider>
-          <br />
-          <Button
-            className="btn1 mt-2"
-            variant="outlined"
-            onClick={() => {
-              setShowModal(true);
-            }}
-          >
-            See Booked Slots
-          </Button>
-          {from && to && (
-            <div>
-              <p>
-                Total Hours : <b>{totalHours}</b>
-              </p>
-              <p>
-                Rent Per Hour : <b>{car.rentPerHour}</b>
-              </p>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setdriver(true);
-                      } else {
-                        setdriver(false);
-                      }
-                    }}
-                  />
-                }
-                label="Driver Required"
-              />
-
-              {/* <label></label> */}
-
-              <h3>Total Amount : {totalAmount}</h3>
-              <Button variant="outlined" onClick={() => onSubmit()}>
-                Book Now
-              </Button>
-            </div>
-          )}
         </div>
-        {car.name && (
-          <Dialog open={showModal} title="Booked time slots">
-            <div className="p-2">
-              {car.bookedTimeSlots.map((slot) => {
+      </div>
+      <br />
+      <Divider type="horizontal" />
+      <Typography variant="h5">Select Time Slots</Typography>
+      <div className="centcont">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <MobileDateRangePicker
+            startText="start Date"
+            value={value}
+            onChange={selectTimeSlots}
+            renderInput={(startProps, endProps) => (
+              <React.Fragment>
+                <TextField {...startProps} />
+                <Box sx={{ mx: 2 }}> to </Box>
+                <TextField {...endProps} />
+              </React.Fragment>
+            )}
+          />
+        </LocalizationProvider>
+        <br />
+        <Button
+          className="btn1 mt-2"
+          variant="outlined"
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          See Booked Slots
+        </Button>
+      </div>
+      {from && to && (
+        <div>
+          <p>
+            Total Hours : <b>{totalHours}</b>
+          </p>
+          <p>
+            Rent Per Hour : <b>{car.rentPerHour}</b>
+          </p>
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setdriver(true);
+                  } else {
+                    setdriver(false);
+                  }
+                }}
+              />
+            }
+            label="Driver Required"
+          />
+
+          {/* <label></label> */}
+
+          <h3>Total Amount : {totalAmount}</h3>
+          <Button variant="outlined" onClick={() => onSubmit()}>
+            Book Now
+          </Button>
+        </div>
+      )}
+
+      {car.name && (
+        <Dialog open={showModal} title="Booked time slots">
+          <div className="p-2">
+            {car.bookedTimeSlots.length > 0 &&
+              car.bookedTimeSlots.map((slot) => {
                 return (
                   <Button className="btn1 mt-2">
                     {slot.from} - {slot.to}
                   </Button>
                 );
               })}
+            {car.bookedTimeSlots.length === 0 ? (
+              <h6>Car is not booked yet</h6>
+            ) : (
+              ""
+            )}
 
-              <div className="text-right mt-5">
-                <Button
-                  className="btn1"
-                  onClick={() => {
-                    setShowModal(false);
-                  }}
-                >
-                  CLOSE
-                </Button>
-              </div>
+            <div className="text-right mt-5">
+              <Button
+                className="btn1"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                CLOSE
+              </Button>
             </div>
-          </Dialog>
-        )}
-      </div>
+          </div>
+        </Dialog>
+      )}
     </section>
   );
 }

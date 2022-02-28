@@ -28,6 +28,11 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .bodycontent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  row-gap: 17px;
+}
+.bodycontent1 {
   display: flex;
   flex-wrap: wrap;
   padding: 15px;
@@ -36,6 +41,18 @@
   max-width: 450px;
   width: 100%;
   height: auto;
+}
+.carinfo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+.centcont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 @media (max-width: 625px) {
   .loginpage,

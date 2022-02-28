@@ -16,7 +16,7 @@ function UserBookings() {
       <Typography variant="h3" className="text-center mt-2">
         My Bookings
       </Typography>
-      <div className="bodycontent">
+      <div className="bodycontent1">
         {bookings
           .filter((o) => o.user === user._id)
           .map((booking) => {
@@ -73,7 +73,7 @@ function UserBookings() {
     </section>
   ) : (
     <div>
-      <h1> User have not start booking</h1>
+      <h1> No booking history.Start booking....</h1>
     </div>
   );
 }
