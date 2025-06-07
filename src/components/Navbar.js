@@ -24,12 +24,11 @@ function Navbar() {
   };
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" >
         <Toolbar variant="dense">
           <Typography
             sx={{
               fontFamily: "Aladin",
-              fontWeight: "bold",
             }}
             variant="h4"
           >

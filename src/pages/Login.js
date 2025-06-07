@@ -21,7 +21,6 @@ function Login() {
       validationSchema: formvalidationSchema,
       onSubmit: (values) => {
         dispatch(userLogin(values));
-        // console.log(values);
       },
     });
   const [text, setText] = useState("Show");

@@ -20,7 +20,7 @@ function Home() {
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     dispatch(getAllCars());
-  });
+  },[]);
   useEffect(() => {
     setTotalcars(cars);
   }, [cars]);
@@ -28,6 +28,7 @@ function Home() {
   if (!user) {
     history.push("/");
   }
+
   return (
     <section className="bodycontent">
       {totalCars ? (
