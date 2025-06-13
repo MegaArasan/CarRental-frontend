@@ -5,6 +5,8 @@ export const userLogin = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
   try {
     const response = await axios.post(`${API_URL}/api/users/login`, reqObj);
+    const {user,token}=response.data;
+    dispatch({type:"Login_success",payload:{token,user}})
     localStorage.setItem("user", JSON.stringify(response.data));
     dispatch({ type: "LOADING", payload: false });
     setTimeout(() => {

@@ -5,7 +5,10 @@ export const bookCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    await axios.post(`${API_URL}/api/bookings/bookcar`, reqObj).then((data) => {
+    const {token}=JSON.parse(localStorage.getItem("user"));
+    await axios.post(`${API_URL}/api/bookings/bookcar`, reqObj,{headers:{
+        Authorization:`Bearer ${token}`
+      }}).then((data) => {
       console.log(data);
       localStorage.setItem("order", JSON.stringify(data));
     });
@@ -22,7 +25,10 @@ export const getAllBookings = () => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    const response = await axios.get(`${API_URL}/api/bookings/getallbookings`);
+    const {token}=JSON.parse(localStorage.getItem("user"));
+    const response = await axios.get(`${API_URL}/api/bookings/getallbookings`,{headers:{
+      Authorization:`Bearer ${token}`
+    }});
     dispatch({ type: "GET_ALL_BOOKINGS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {

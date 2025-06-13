@@ -4,8 +4,9 @@ import { API_URL } from "../../globalconstant.js";
 export const getAllCars = () => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
   try {
-    const response = await axios.get(`${API_URL}/api/cars/getallcars`);
-    dispatch({ type: "GET_ALL_CARS", payload: response.data });
+    const {token}=JSON.parse(localStorage.getItem("user"));
+    const response = await axios.get(`${API_URL}/api/cars/getallcars`,{ headers:{ Authorization:`Bearer ${token}`}});
+    dispatch({ type: "GET_ALL_CARS", payload: response.data.data });
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
     console.log(error);
