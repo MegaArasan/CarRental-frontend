@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCars } from "../redux/actions/carsAction";
+import { getAllCars } from "../../redux/actions/carsAction";
 import {
   Card,
   CardMedia,
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import "./Home.css";
 
 function Home() {
   const history = useHistory();

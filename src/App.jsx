@@ -1,12 +1,12 @@
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
+import Home from "./pages/Home/Home.jsx";
+import Login from "./pages/Login/Login.jsx";
+import Register from "./pages/Register/Register.jsx";
 import BookingCar from "./pages/BookingCar.jsx";
-import Forgotpassword from "./pages/Forgotpassword.jsx";
-import Resetpassword from "./pages/Resetpassword.jsx";
-import Navbar from "./components/Navbar.js";
+import Forgotpassword from "./pages/ForgotPassword/Forgotpassword.jsx";
+import Resetpassword from "./pages/ResetPassword/Resetpassword.jsx";
+import Navbar from "./components/Navbar/Navbar.jsx";
 import Paper from "@mui/material/Paper";
 import UserBookings from "./pages/UserBookings";
 

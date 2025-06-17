@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userResetpass } from "../redux/actions/userActions";
+import { userResetpass } from "../../redux/actions/userActions";
 import { Typography, TextField, Button, IconButton } from "@mui/material";
 import { InputAdornment, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -8,6 +8,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
+import "./Resetpassword.css";
+import car from "../../assets/background.png";
 
 function Resetpassword() {
   const userId = useParams().userId;
@@ -36,22 +38,16 @@ function Resetpassword() {
     setText((text) => (text === "Show" ? "Hide" : "Show"));
   };
   return (
-    <div className="resetpage">
-      <div className="brand">
-        <Typography
-          sx={{
-            fontSize: { xs: "50px", sm: "60px" },
-            fontFamily: "Aladin",
-            fontWeight: "bold",
-            color: "#fff",
-          }}
-          variant="h1"
-        >
-          King cars
-        </Typography>
+    <div className="reset-container">
+      <div className="company-name"> King Cars</div>
+      <div className="car-stage">
+        <img
+          src={car}
+          alt="Porsche GT3"
+          className="car-image"
+        />
       </div>
-      <div className="formcontainer">
-        <form onSubmit={handleSubmit}>
+       <form className="reset-form glass-card" onSubmit={handleSubmit}>
           <div>
             <Typography
               variant="h4"
@@ -122,12 +118,12 @@ function Resetpassword() {
               }}
               sx={{ margin: "5px" }}
             />
-            <Button type="submit" variant="contained" color="success">
+            <Button sx={{borderRadius:"10px",margin:"10px 0"}} type="submit" variant="contained" color="error">
               Update password
             </Button>
           </div>
         </form>
-      </div>
+
     </div>
   );
 }

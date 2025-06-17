@@ -1,0 +1,147 @@
+.login-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: #f4f6f9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-left: 5vw;
+  font-family: "Roboto", sans-serif;
+  z-index: 0;
+}
+
+/* Glassmorphism form */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 10;
+  position: relative;
+}
+
+/* Form Layout */
+.login-form {
+   width: 350px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+}
+
+/* Car Stage */
+.car-stage {
+  bottom: 10%;
+  position: absolute;
+  left: -100%;
+  width: 200%;
+  transform: scale(0.7);
+  animation: driveFromLeft 2.4s ease-out forwards;
+  z-index: 1;
+  transform-origin: bottom left;
+  pointer-events: none;
+}
+
+.car-image {
+  width: 70%;
+  height: auto;
+}
+
+@keyframes driveFromLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(55%);
+  }
+}
+
+.company-name {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 48px;
+  font-weight: bold;
+  color: #1c1c1c;
+  font-family: 'Aladin', sans-serif;
+  z-index: 10;
+  animation: fadeIn 1.5s ease-in 1.8s forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@media (max-width: 960px) {
+  .login-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .login-form {
+    margin-left: 0;
+    width: 90%;
+    padding: 25px;
+  }
+
+  .car-stage {
+    bottom: 35%;
+    left: -120%;
+    width: 250%;
+    transform: scale(0.6);
+    animation: driveFromLeftMobile  2.4s ease-out forwards;
+    z-index: 0;
+  }
+
+  .company-name {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 44px;
+    text-align: center;
+  }
+  .car-image{
+    width: 90%;
+  }
+}
+
+@keyframes driveFromLeftMobile {
+  0% {
+    transform: translateX(0%) scale(0.6);
+  }
+  100% {
+    transform: translateX(40%) scale(0.6);
+  }
+}
+
+/* Text and Link */
+.forgetpass {
+  background: none;
+  border: none;
+  color: #1976d2;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+#register{
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px 0;
+}
+#register:hover{
+  color: red;
+}
+
+.account {
+  margin-top: 10px;
+  font-size: 14px;
+}

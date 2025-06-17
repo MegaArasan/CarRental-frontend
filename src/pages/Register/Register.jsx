@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userRegister } from "../redux/actions/userActions";
+import { userRegister } from "../../redux/actions/userActions";
 import { Typography, TextField, Button, IconButton } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { InputAdornment, Tooltip } from "@mui/material";
@@ -8,6 +8,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import "./Register.css";
+import car from "../../assets/background.png"
 
 function Register() {
   const history = useHistory();
@@ -36,22 +38,16 @@ function Register() {
     setText((text) => (text === "Show" ? "Hide" : "Show"));
   };
   return (
-    <div className="registerpage">
-      <div className="brand">
-        <Typography
-          sx={{
-            fontSize: { xs: "50px", sm: "60px" },
-            fontFamily: "Aladin",
-            fontWeight: "bold",
-            color: "#fff",
-          }}
-          variant="h1"
-        >
-          King cars
-        </Typography>
+    <div className="register-container">
+      <div className="company-name"> King Cars</div>
+      <div className="car-stage">
+        <img
+          src={car}
+          alt="Porsche GT3"
+          className="car-image"
+        />
       </div>
-      <div className="formcontainer">
-        <form onSubmit={handleSubmit}>
+   <form className="register-form glass-card" onSubmit={handleSubmit}>
           <div>
             <Typography
               variant="h4"
@@ -150,22 +146,21 @@ function Register() {
               }}
               sx={{ margin: "5px" }}
             />
-            <Button type="submit" variant="contained" color="success">
+            <Button sx={{borderRadius:"10px",margin:"10px 0"}} type="submit" variant="contained" color="error">
               Regiter
             </Button>
           </div>
           <div style={{ margin: "5px" }}>
-            <label className="account">Already have an Account?</label>
-            <Button
-              color="success"
-              variant="text"
+            <label for="login" className="account">Already have an Account?</label>
+            <button
+              id="login"
               onClick={() => history.push("/login")}
             >
               Log In
-            </Button>
+            </button>
           </div>
         </form>
-      </div>
+
     </div>
   );
 }

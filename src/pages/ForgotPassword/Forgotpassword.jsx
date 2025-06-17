@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { userForgotpass } from "../redux/actions/userActions";
+import { userForgotpass } from "../../redux/actions/userActions";
 import { Typography, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import "./Forgotpassword.css";
+import car from "../../assets/background.png";
 
 function Forgotpassword() {
   const dispatch = useDispatch();
@@ -19,22 +21,19 @@ function Forgotpassword() {
       },
     });
   return (
-    <div className="forgotpage">
-      <div className="brand">
-        <Typography
-          sx={{
-            fontSize: { xs: "50px", sm: "60px" },
-            fontFamily: "Aladin",
-            fontWeight: "bold",
-            color: "#fff",
-          }}
-          variant="h1"
-        >
-          King cars
-        </Typography>
+    <div className="forgot-container">
+      <div className="company-name"> King Cars</div>
+
+      <div className="car-stage">
+        <img
+          src={car}
+          alt="Porsche GT3"
+          className="car-image"
+        />
       </div>
-      <div className="formcontainer">
-        <form onSubmit={handleSubmit}>
+
+
+        <form className="forgot-form glass-card" onSubmit={handleSubmit}>
           <div>
             <Typography
               variant="h4"
@@ -71,12 +70,12 @@ function Forgotpassword() {
               sx={{ margin: "5px" }}
             />
 
-            <Button type="submit" variant="contained" color="success">
+            <Button sx={{borderRadius:"10px",margin:"10px 0"}} type="submit" variant="contained" color="error">
               Submit
             </Button>
           </div>
         </form>
-      </div>
+
     </div>
   );
 }
