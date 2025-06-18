@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
+  background-color: #C62828;
   padding: 10px 20px;
   color: white;
   position: relative;
@@ -11,7 +11,7 @@
 }
 
 .navbar-logo {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   font-family: 'Aladin',sans-serif;
 }
@@ -21,7 +21,7 @@
 }
 
 .logo-red {
-  color: red;
+  color: black;
 }
 
 .nav-links {
@@ -38,7 +38,7 @@
 }
 
 .nav-links li a:hover {
-  color: red;
+  color: black;
 }
 
 /* === Right section (User + Hamburger) === */
@@ -63,8 +63,7 @@
   width: 150px;
   top: 40px;
   right: 0;
-  background: black;
-  border: 1px solid white;
+  background: #C62828;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -81,8 +80,8 @@
 
 .dropdown a:hover,
 .dropdown div:hover {
-  background: red;
-  color: white;
+  background: white;
+  color: black;
 }
 
 /* === Hamburger Menu Button === */
@@ -100,7 +99,7 @@
   position: absolute;
   top: 60px;
   right: 0;
-  background: black;
+  background: #C62828;
   width: 100%;
   padding: 1rem;
   text-align: center;
@@ -125,7 +124,8 @@
 
 .mobile-menu li a:hover,
 .mobile-menu li:hover {
-  color: red;
+  color: white;
+  background: black;
 }
 
 /* === Responsive Rules === */

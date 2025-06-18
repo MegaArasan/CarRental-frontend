@@ -1,80 +1,98 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllCars } from "../../redux/actions/carsAction";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-} from "@mui/material";
-import { useHistory } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
+import React from "react";
+import {NavLink, useHistory} from "react-router-dom";
 import "./Home.css";
+import HeroSection from "../../components/Hero/Hero";
+import car from "../../assets/Ford-Mustang.png"
 
-function Home() {
+const DashboardHome = ({ userName, nextBooking }) =>  {
   const history = useHistory();
-  const { cars } = useSelector((state) => state.carsReducer);
-  const [totalCars, setTotalcars] = useState([]);
-  const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("user"));
-  useEffect(() => {
-    dispatch(getAllCars());
-  },[]);
-  useEffect(() => {
-    setTotalcars(cars);
-  }, [cars]);
+  const handleBookNow = () => {
+    history.push("/cars")
+  };
 
-  if (!user) {
-    history.push("/");
-  }
+  const hotDeals = [
+    {
+      id: 1,
+      title: "SUV Weekend Sale – 25% Off",
+      link: "/cars?type=SUV&discount=25",
+      image: "../../assets/Ford-Mustang.png",
+    },
+    {
+      id: 2,
+      title: "Tesla Model 3 Rentals",
+      link: "/cars?model=Tesla3",
+      image: "../../assets/Ford-Mustang.png",
+    },
+    {
+      id: 3,
+      title: "Free GPS Add‑on Today!",
+      link: "/addons?gps=true",
+      image: "../../assets/Ford-Mustang.png",
+    },
+  ];
 
-  return (
-    <section className="bodycontent">
-      {totalCars ? (
-        totalCars.map((car) => {
-          return (
-            <Card
-              key={car._id}
-              sx={{
-                maxWidth: "350px",
-                margin: "10px",
-                borderRadius: "10px",
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="140"
-                image={car.image}
-                alt={car.name}
-                sx={{ borderRadius: "10px", overflow: "hidden" }}
-              />
-              <CardContent>
-                <Typography variant="h5" component="div" gutterBottom>
-                  {car.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <b>Rent Per Hour</b>:{car.rentPerHour}
-                </Typography>
-              </CardContent>
-              <CardActions sx={{ justifyContent: "center" }}>
-                <Button
-                  variant="outlined"
-                  color="warning"
-                  onClick={() => history.push(`/booking/${car._id}`)}
-                >
-                  Book Now
-                </Button>
-              </CardActions>
-            </Card>
-          );
-        })
-      ) : (
-        <CircularProgress color="inherit" />
-      )}
-    </section>
-  );
-}
+    return (
+      <>
+        <HeroSection
+          headline="Welcome back, John!"
+          subtext="Ready for your next adventure?"
+          ctaText="Start Booking"
+          onCtaClick={handleBookNow}
+        />
+        <div className="dashboard-container">
+          {/* Quick‑Search */}
+          <section className="section quick-search">
+            <input type="text" placeholder="Pickup city or airport" />
+            <input type="date" />
+            <button className="btn-primary">Find Cars</button>
+          </section>
 
-export default Home;
+          {/* Quick Actions */}
+          <section className="section actions">
+            <button className="action-btn" onClick={()=>history.push("/cars")}>+ New Reservation</button>
+            <button className="action-btn" onClick={()=>history.push("/my-bookings")}>🚗 My Bookings</button>
+            <button className="action-btn">💳 Payment Methods</button>
+            <button className="action-btn">🛠 Support</button>
+          </section>
+
+          {/* Hot Deals */}
+          <section className="section promos">
+            <h2>Hot Deals</h2>
+            <div className="promos-grid">
+              {hotDeals.map((deal) => (
+                <NavLink key={deal.id} to={deal.link} className="promo-card">
+                  <div className="promo-img-wrapper">
+                    <img
+                      src={car}
+                      alt={deal.title}
+                      className="promo-img"
+                    />
+                  </div>
+                  <div className="promo-text">{deal.title}</div>
+                </NavLink>
+              ))}
+            </div>
+          </section>
+
+          {/* Explore Cars */}
+          <section className="section cars">
+            <h2>Explore Cars</h2>
+            <div className="cars-grid">
+              {["Sedan","SUV","Compact","Luxury"].map((type) => (
+                <NavLink key={type} to={`/cars?filter=${type}`} className="car-card">
+                  <div className="carback" style={{ backgroundImage: `url(/images/${type.toLowerCase()}.jpg)` }} />
+                  <div className="car-info">
+                    <h3>{type}</h3>
+                    <p>From ₹2,000/day</p>
+                  </div>
+                </NavLink>
+              ))}
+            </div>
+          </section>
+        </div>
+     </>
+
+)
+};
+
+export default DashboardHome;

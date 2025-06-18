@@ -1,6 +1,167 @@
-.bodycontent{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    row-gap: 17px;
-    background: var(--bg-default);
+/* --- Global Section Spacing & Headings --- */
+.section {
+  margin: 2rem 0;
+  padding: 1em;
+}
+.section h2 {
+  font-size: 1.75rem;
+  color: #000;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+}
+.section h2::after {
+  content: "";
+  width: 60px; height: 3px;
+  background: #d32f2f;
+  display: block;
+  margin: 0.5rem auto 0;
+}
+
+/* --- Quick‑Search --- */
+.quick-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.quick-search input,
+.quick-search button {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.quick-search input:focus {
+  outline: none;
+  border-color: #d32f2f;
+}
+.quick-search .btn-primary {
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.quick-search .btn-primary:hover {
+  background: #b22a2a;
+}
+
+/* --- Quick Actions --- */
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+.action-btn {
+  background: #d32f2f;
+  color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.action-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* --- Hot Deals --- */
+.promos-grid {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.promo-card {
+  flex: 0 0 220px;
+  background: #000;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s, transform 0.2s;
+}
+.promo-card:hover {
+  background: #222;
+  transform: translateY(-6px);
+}
+
+/* Image wrapper to enforce aspect ratio */
+.promo-img-wrapper {
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  position: relative;
+  background: #111;
+}
+
+.promo-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+/* Text area */
+.promo-text {
+  padding: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* --- Explore Cars --- */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.car-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.2s;
+}
+.car-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.carback {
+  width: 100%;
+  padding-top: 56%; /* 16:9 aspect */
+  background-size: cover;
+  background-position: center;
+}
+.car-info {
+  padding: 1rem;
+  text-align: center;
+}
+.car-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.car-info p {
+  margin: 0.5rem 0 0;
+  color: #555;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .promo-card {
+    flex: 0 0 180px;
+  }
+  .promos-grid {
+    gap: 0.5rem;
+  }
+  .quick-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
