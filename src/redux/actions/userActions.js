@@ -4,7 +4,7 @@ import { API_URL } from "../../globalconstant.js";
 export const userLogin = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
   try {
-    const response = await axios.post(`${API_URL}/api/users/login`, reqObj);
+    const response = await axios.post(`${API_URL}/api/v1/user/login`, reqObj);
     const {user,token}=response.data;
     dispatch({type:"Login_success",payload:{token,user}})
     localStorage.setItem("user", JSON.stringify(response.data));
@@ -22,7 +22,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
 export const userRegister = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
   try {
-    const response = await axios.post(`${API_URL}/api/users/register`, reqObj);
+    const response = await axios.post(`${API_URL}/api/v1/user/register`, reqObj);
     console.log(response);
     dispatch({ type: "LOADING", payload: false });
     setTimeout(() => {
@@ -39,7 +39,7 @@ export const userForgotpass = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
   try {
     const response = await axios.post(
-      `${API_URL}/api/users/forgotpassword`,
+      `${API_URL}/api/v1/user/forgotpassword`,
       reqObj
     );
     console.log(response);
@@ -60,7 +60,7 @@ export const userResetpass = (reqObj) => async (dispatch) => {
   const { userId, token } = reqObj;
   try {
     const response = await axios.post(
-      `${API_URL}/api/users/password-reset/${userId}/${token}`,
+      `${API_URL}/api/v1/users/password-reset/${userId}/${token}`,
       reqObj
     );
     console.log(response);
