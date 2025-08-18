@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllBookings } from "../redux/actions/bookingActions";
-import moment from "moment";
-import { Typography, Card } from "@mui/material";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBookings } from '../redux/actions/bookingActions';
+import moment from 'moment';
+import { Typography, Card } from '@mui/material';
 function UserBookings() {
   const dispatch = useDispatch();
   const { bookings } = useSelector((state) => state.bookingsReducer);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     dispatch(getAllBookings());
   });
@@ -21,22 +21,11 @@ function UserBookings() {
           .filter((o) => o.user === user._id)
           .map((booking) => {
             return (
-              <Card
-                key={booking._id}
-                sx={{ maxWidth: 250, margin: "10px", borderRadius: "10px" }}
-              >
-                <div
-                  style={{ borderRadius: 5, overflow: "hidden" }}
-                  className="imgbook"
-                >
-                  <img
-                    src={booking.car.image}
-                    height="140"
-                    width="100%"
-                    alt={booking.car.name}
-                  />
+              <Card key={booking._id} sx={{ maxWidth: 250, margin: '10px', borderRadius: '10px' }}>
+                <div style={{ borderRadius: 5, overflow: 'hidden' }} className="imgbook">
+                  <img src={booking.car.image} height="140" width="100%" alt={booking.car.name} />
                 </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="p">
                     <b>{booking.car.name}</b>
                   </Typography>
@@ -51,7 +40,7 @@ function UserBookings() {
                   </Typography>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* <Typography variant="p">
                     Transaction Id : <b>{booking.transactionId}</b>
                   </Typography> */}
@@ -62,8 +51,7 @@ function UserBookings() {
                     To: <b>{booking.bookedTimeSlots.to}</b>
                   </Typography>
                   <Typography variant="p">
-                    Date of booking:{" "}
-                    <b>{moment(booking.createdAt).format("MMM DD yyyy")}</b>
+                    Date of booking: <b>{moment(booking.createdAt).format('MMM DD yyyy')}</b>
                   </Typography>
                 </div>
               </Card>

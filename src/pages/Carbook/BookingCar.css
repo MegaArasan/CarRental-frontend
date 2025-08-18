@@ -5,7 +5,7 @@
   --brand-red: #d32f2f;
   --dark-bg: #1b1b1b;
   --light-bg: #fafafa;
-  --card-shadow: rgba(0,0,0,0.12);
+  --card-shadow: rgba(0, 0, 0, 0.12);
   --text-primary: #222;
   --text-secondary: #555;
 }
@@ -38,10 +38,12 @@
 }
 .sidebar::before {
   /* subtle red gradient stripe */
-  content: "";
+  content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 6px; height: 100%;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
   background: linear-gradient(to bottom, var(--brand-red), transparent);
 }
 .back-btn {
@@ -49,7 +51,7 @@
   top: 1rem;
   right: 1rem;
   color: var(--text-secondary);
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 .back-btn:hover {
   transform: rotate(-20deg);
@@ -79,7 +81,9 @@
   font-weight: bold;
   padding: 0.75rem;
   border-radius: 6px !important;
-  transition: background .3s, transform .2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
 }
 .btn-book:hover {
   background: #b22a2a !important;
@@ -111,7 +115,7 @@
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 12px var(--card-shadow);
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 .gallery-img:hover {
   transform: scale(1.05);
@@ -147,7 +151,9 @@
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
-  transition: background .2s, color .2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 .feature-chip:hover {
   background: var(--brand-red);
@@ -155,10 +161,12 @@
 }
 
 /* POLICY & REVIEWS */
-.policy, .reviews {
+.policy,
+.reviews {
   margin-top: 2rem;
 }
-.policy h6, .reviews h6 {
+.policy h6,
+.reviews h6 {
   margin-bottom: 0.5rem;
   color: var(--text-primary);
 }
@@ -209,7 +217,8 @@
   .page-container {
     padding: 1rem 0;
   }
-  .sidebar, .main-content {
+  .sidebar,
+  .main-content {
     width: 100%;
   }
 }

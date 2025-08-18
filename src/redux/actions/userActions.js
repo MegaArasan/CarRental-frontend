@@ -1,62 +1,62 @@
-import axios from "axios";
-import { API_URL } from "../../globalconstant.js";
+import axios from 'axios';
+import { API_URL } from '../../globalconstant.js';
 
 export const userLogin = (reqObj) => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
   try {
-    const response = await axios.post(`${API_URL}/api/v1/user/login`, reqObj);
-    const {user,token}=response.data;
-    dispatch({type:"Login_success",payload:{token,user}})
-    localStorage.setItem("user", JSON.stringify(response.data));
-    dispatch({ type: "LOADING", payload: false });
+    const response = await axios.post(`${API_URL}/api/v1/user/login`, reqObj, {
+      withCredentials: true,
+    });
+
+    const { user, token } = response.data;
+    dispatch({ type: 'Login_success', payload: { token, user } });
+    localStorage.setItem('user', JSON.stringify(response.data));
+    dispatch({ type: 'LOADING', payload: false });
     setTimeout(() => {
-      window.location.href = "/home";
+      window.location.href = '/home';
     }, 500);
   } catch (error) {
     console.log(error);
     window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({ type: 'LOADING', payload: false });
   }
 };
 
 export const userRegister = (reqObj) => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
   try {
     const response = await axios.post(`${API_URL}/api/v1/user/register`, reqObj);
     console.log(response);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({ type: 'LOADING', payload: false });
     setTimeout(() => {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }, 500);
   } catch (error) {
     console.log(error);
-    window.alert("Email already exist");
-    dispatch({ type: "LOADING", payload: false });
+    window.alert('Email already exist');
+    dispatch({ type: 'LOADING', payload: false });
   }
 };
 
 export const userForgotpass = (reqObj) => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
   try {
-    const response = await axios.post(
-      `${API_URL}/api/v1/user/forgotpassword`,
-      reqObj
-    );
+    const response = await axios.post(`${API_URL}/api/v1/user/forgotpassword`, reqObj);
     console.log(response);
-    window.alert("Verification link sent to the registered email");
-    dispatch({ type: "LOADING", payload: false });
+    window.alert('Verification link sent to the registered email');
+    dispatch({ type: 'LOADING', payload: false });
     setTimeout(() => {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }, 2000);
   } catch (error) {
     console.log(error);
     window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({ type: 'LOADING', payload: false });
   }
 };
 
 export const userResetpass = (reqObj) => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
   const { userId, token } = reqObj;
   try {
     const response = await axios.post(
@@ -64,13 +64,13 @@ export const userResetpass = (reqObj) => async (dispatch) => {
       reqObj
     );
     console.log(response);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({ type: 'LOADING', payload: false });
     setTimeout(() => {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }, 500);
   } catch (error) {
     console.log(error);
     window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({ type: 'LOADING', payload: false });
   }
 };

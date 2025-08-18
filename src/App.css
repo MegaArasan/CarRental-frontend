@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script:wght@500&family=Great+Vibes&family=Roboto+Condensed:ital@1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script:wght@500&family=Great+Vibes&family=Roboto+Condensed:ital@1&display=swap');
 
 .App {
   text-align: center;
@@ -26,4 +26,3 @@
   flex-direction: column;
   align-items: center;
 }
-

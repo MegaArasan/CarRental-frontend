@@ -4,7 +4,7 @@ const initialData = {
 
 export const bookingsReducer = (state = initialData, action) => {
   switch (action.type) {
-    case "GET_ALL_BOOKINGS": {
+    case 'GET_ALL_BOOKINGS': {
       return {
         ...state,
         bookings: action.payload,

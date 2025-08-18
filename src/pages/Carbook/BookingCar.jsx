@@ -253,12 +253,11 @@
 //
 //export default BookingCar;
 
-
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getAllCars } from "../../redux/actions/carsAction";
-import moment from "moment";
-import { bookCar } from "../../redux/actions/bookingActions";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCarById } from '../../redux/actions/carsAction';
+import moment from 'moment';
+import { bookCar } from '../../redux/actions/bookingActions';
 import {
   Button,
   Checkbox,
@@ -269,23 +268,22 @@ import {
   Box,
   Divider,
   IconButton,
-} from "@mui/material";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import MobileDateRangePicker from "@mui/lab/MobileDateRangePicker";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import StarIcon from "@mui/icons-material/Star";
-import "./BookingCar.css";
+} from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import MobileDateRangePicker from '@mui/lab/MobileDateRangePicker';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import StarIcon from '@mui/icons-material/Star';
+import './BookingCar.css';
 
 function BookingCar({ match, history }) {
-  const { cars } = useSelector((s) => s.carsReducer);
+  console.log(match.params.carid);
+  const { car } = useSelector((s) => s.carsReducer);
   const dispatch = useDispatch();
-  const [car, setCar] = useState(null);
-
+  console.log(car);
   useEffect(() => {
-    if (!cars.length) dispatch(getAllCars());
-    else setCar(cars.find((c) => c._id === match.params.carid));
-  }, [cars]);
+    dispatch(getCarById({ carId: match.params.carid }));
+  }, [match.params.carid]);
 
   const goBack = () => history.goBack();
 
@@ -293,7 +291,7 @@ function BookingCar({ match, history }) {
 }
 
 function BookCar({ car, onBack }) {
-  const { user } = JSON.parse(localStorage.getItem("user"));
+  const { user } = JSON.parse(localStorage.getItem('user'));
   const dispatch = useDispatch();
 
   // booking state
@@ -321,27 +319,31 @@ function BookCar({ car, onBack }) {
       totalAmount: total,
       driverRequired: driver,
       bookedTimeSlots: {
-        from: moment(range[0]).format("MMM DD, yyyy"),
-        to: moment(range[1]).format("MMM DD, yyyy"),
+        from: moment(range[0]).format('MMM DD, yyyy'),
+        to: moment(range[1]).format('MMM DD, yyyy'),
       },
     };
     dispatch(bookCar(payload));
     // then launch payment…
   };
 
-  const hotFeatures = ["Air Conditioning", "Automatic Transmission", "Bluetooth", "USB Charging"];
+  const hotFeatures = ['Air Conditioning', 'Automatic Transmission', 'Bluetooth', 'USB Charging'];
   const reviews = [
-    { name: "Alice", rating: 5, text: "Great ride—smooth and clean." },
-    { name: "Bob",   rating: 4, text: "Good value for money." },
+    { name: 'Alice', rating: 5, text: 'Great ride—smooth and clean.' },
+    { name: 'Bob', rating: 4, text: 'Good value for money.' },
   ];
 
   return (
     <div className="page-container">
       <aside className="sidebar">
-        <IconButton onClick={onBack} className="back-btn"><ArrowBackIcon /></IconButton>
+        <IconButton onClick={onBack} className="back-btn">
+          <ArrowBackIcon />
+        </IconButton>
         <Box className="sticky-panel">
           <Typography variant="h6">Book This Car</Typography>
-          <Typography><b>₹{car.rentPerHour}/hr</b></Typography>
+          <Typography>
+            <b>₹{car.rentPerHour}/hr</b>
+          </Typography>
           <Divider />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MobileDateRangePicker
@@ -363,7 +365,9 @@ function BookCar({ car, onBack }) {
           />
           {totalHours > 0 && (
             <>
-              <Typography>Total: <b>₹{total.toFixed(2)}</b></Typography>
+              <Typography>
+                Total: <b>₹{total.toFixed(2)}</b>
+              </Typography>
               <Button variant="contained" className="btn-book" onClick={handleBook}>
                 Proceed to Pay
               </Button>
@@ -378,37 +382,41 @@ function BookCar({ car, onBack }) {
       <main className="main-content">
         <section className="images-gallery">
           {car.images?.map((img, i) => (
-            <img key={i} src={img} alt={`${car.name} ${i+1}`} className="gallery-img" />
+            <img key={i} src={img} alt={`${car.name} ${i + 1}`} className="gallery-img" />
           ))}
         </section>
 
         <section className="car-info">
           <Typography variant="h4">{car.name}</Typography>
-          <Typography color="textSecondary">{car.fuelType} • {car.capacity} seats</Typography>
+          <Typography color="textSecondary">
+            {car.fuelType} • {car.capacity} seats
+          </Typography>
           <Typography paragraph>{car.description}</Typography>
 
           <div className="features">
             {hotFeatures.map((feat) => (
-              <span key={feat} className="feature-chip">{feat}</span>
+              <span key={feat} className="feature-chip">
+                {feat}
+              </span>
             ))}
           </div>
 
           <div className="policy">
             <Typography variant="subtitle1">Cancellation Policy</Typography>
-            <Typography variant="body2">
-              Full refund if cancelled 24h before pickup.
-            </Typography>
+            <Typography variant="body2">Full refund if cancelled 24h before pickup.</Typography>
           </div>
 
           <div className="review">
             <Typography variant="subtitle1">Customer Reviews</Typography>
             {reviews.map((r, i) => (
               <div key={i} className="review">
-                  <div className="review-name">{r.name}</div>
-                  <div className="review-stars">
-                    {[...Array(r.rating)].map((_, i) => <StarIcon key={i} />)}
-                  </div>
-                  <div className="review-text">{r.text}</div>
+                <div className="review-name">{r.name}</div>
+                <div className="review-stars">
+                  {[...Array(r.rating)].map((_, i) => (
+                    <StarIcon key={i} />
+                  ))}
+                </div>
+                <div className="review-text">{r.text}</div>
               </div>
             ))}
           </div>
@@ -420,13 +428,17 @@ function BookCar({ car, onBack }) {
         <Box className="modal-box">
           <Typography variant="h6">Booked Slots</Typography>
           {car.bookedTimeSlots.length ? (
-            car.bookedTimeSlots.map((s,i) => (
-              <Typography key={i}>{s.from} — {s.to}</Typography>
+            car.bookedTimeSlots.map((s, i) => (
+              <Typography key={i}>
+                {s.from} — {s.to}
+              </Typography>
             ))
           ) : (
             <Typography>No bookings yet.</Typography>
           )}
-          <Button onClick={() => setShowSlots(false)} className="btn-close">Close</Button>
+          <Button onClick={() => setShowSlots(false)} className="btn-close">
+            Close
+          </Button>
         </Box>
       </Dialog>
     </div>
