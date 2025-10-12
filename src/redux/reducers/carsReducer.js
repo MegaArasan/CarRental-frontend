@@ -16,6 +16,10 @@ export const carsReducer = (state = initialData, action) => {
         car: action.payload,
       };
     }
+
+    case 'EXPLORE':
+      return { ...state, explore: action.payload, loading: false };
+
     default:
       return state;
   }
