@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_URL } from '../../globalconstant.js';
 
 export const getAllCars = () => async (dispatch) => {
-  dispatch({ type: 'LOADING', payload: true });
+  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
   try {
     const { token } = JSON.parse(localStorage.getItem('user'));
     const response = await axios.get(`${API_URL}/api/v1/cars`, {
@@ -10,15 +10,16 @@ export const getAllCars = () => async (dispatch) => {
       withCredentials: true,
     });
     dispatch({ type: 'GET_ALL_CARS', payload: response.data.data });
-    dispatch({ type: 'LOADING', payload: false });
   } catch (error) {
-    window.alert(error);
-    dispatch({ type: 'LOADING', payload: false });
+    dispatch({
+      type: 'GET_ALL_CARS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
 
 export const getCarById = (reqObj) => async (dispatch) => {
-  dispatch({ type: 'LOADING', payload: true });
+  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
   const { carId } = reqObj;
   try {
     const { token } = JSON.parse(localStorage.getItem('user'));
@@ -27,9 +28,10 @@ export const getCarById = (reqObj) => async (dispatch) => {
       withCredentials: true,
     });
     dispatch({ type: 'GET_CAR_ID', payload: response.data.data });
-    dispatch({ type: 'LOADING', payload: false });
   } catch (error) {
-    window.alert(error);
-    dispatch({ type: 'LOADING', payload: false });
+    dispatch({
+      type: 'GET_ALL_CARS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
