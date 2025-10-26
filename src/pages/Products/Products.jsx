@@ -65,7 +65,7 @@ function Products() {
   );
 
   const manufacturers = makeModel.manufacturers || [];
-  const models = makeModel.models || {};
+  const models = useMemo(() => makeModel.models || {}, [makeModel.models]);
 
   // Local UI state
   const [search, setSearch] = useState('');
