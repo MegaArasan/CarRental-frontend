@@ -17,4 +17,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// TODO: Need to focus on the car page
+// TODO: Need to focus on the car booking page

@@ -1,5 +1,4 @@
 const initialData = {
-  data: {},
   loading: false,
   error: null,
 };
@@ -25,11 +24,16 @@ export const carsReducer = (state = initialData, action) => {
       };
     }
 
-    case 'EXPLORE':
+    case 'EXPLORE': {
       return { ...state, explore: action.payload, loading: false };
+    }
 
     case 'GET_ALL_CARS_FAIL': {
       return { ...state, error: action.payload, loading: false };
+    }
+
+    case 'GET_ALL_MAKE_MODEL': {
+      return { ...state, makeModel: action.payload, loading: false };
     }
 
     default:

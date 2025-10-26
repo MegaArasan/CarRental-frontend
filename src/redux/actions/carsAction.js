@@ -35,3 +35,18 @@ export const getCarById = (reqObj) => async (dispatch) => {
     });
   }
 };
+
+export const getAllMakeModel = () => async (dispatch) => {
+  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+  try {
+    const response = await axios.get(`${API_URL}/api/v1/cars/getMakeAndModel`, {
+      withCredentials: true,
+    });
+    dispatch({ type: 'GET_ALL_MAKE_MODEL', payload: response.data.data });
+  } catch (error) {
+    dispatch({
+      type: 'GET_ALL_CARS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};

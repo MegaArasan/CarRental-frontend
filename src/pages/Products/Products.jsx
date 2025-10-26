@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCars } from '../../redux/actions/carsAction';
+import { getAllCars, getAllMakeModel } from '../../redux/actions/carsAction';
 import {
   Card,
   CardMedia,
@@ -14,169 +14,208 @@ import {
   MenuItem,
   CircularProgress,
   InputAdornment,
+  Container,
+  Paper,
+  Chip,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useHistory } from 'react-router-dom';
-import './Product.css';
+import './Product.css'; // External styling
 
-function Home() {
+// --- Hero Section ---
+const HeroSection = ({ onBookNowClick }) => (
+  <Box className="hero-container">
+    <Box
+      component="img"
+      src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1600"
+      alt="Luxury car"
+      className="hero-bg"
+    />
+    <Box className="hero-content">
+      <Typography variant="h2" className="hero-title">
+        Find Your Perfect Ride
+      </Typography>
+      <Typography variant="h5" className="hero-subtitle">
+        Explore, Compare & Book from our exclusive collection 🚗✨
+      </Typography>
+      <Button
+        variant="contained"
+        color="warning"
+        size="large"
+        sx={{ borderRadius: 3, px: 5, py: 1.5, fontWeight: 600 }}
+        onClick={onBookNowClick}
+      >
+        Browse Cars
+      </Button>
+    </Box>
+  </Box>
+);
+
+// --- Main Home Component ---
+function Products() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { cars, loading } = useSelector((state) => state.carsReducer);
 
-  const [filteredCars, setFilteredCars] = useState([]);
+  // Redux slices
+  const { cars, loading: carsLoading } = useSelector((state) => state.carsReducer);
+  const { makeModel = {}, loading: makeModelLoading = false } = useSelector(
+    (state) => state.carsReducer || {}
+  );
+
+  const manufacturers = makeModel.manufacturers || [];
+  const models = makeModel.models || {};
+
+  // Local UI state
   const [search, setSearch] = useState('');
   const [selectedManufacturer, setSelectedManufacturer] = useState('');
   const [selectedModel, setSelectedModel] = useState('');
 
-  const user = JSON.parse(localStorage.getItem('user'));
-
+  // Fetch cars + make-model on mount
   useEffect(() => {
-    if (!user) history.push('/');
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      history.push('/');
+      return;
+    }
     dispatch(getAllCars());
-  }, []);
+    dispatch(getAllMakeModel());
+  }, [dispatch, history]);
 
+  // Filter cars dynamically
+  const filteredCars = useMemo(() => {
+    const baseCars = cars.cars || []; // changed from cars?.cars
+    return baseCars.filter((car) => {
+      const matchesSearch = car.manufacturer.toLowerCase().includes(search.toLowerCase());
+      const matchesManu = selectedManufacturer ? car.manufacturer === selectedManufacturer : true;
+      const matchesModel = selectedModel ? car.model === selectedModel : true;
+      return matchesSearch && matchesManu && matchesModel;
+    });
+  }, [cars, search, selectedManufacturer, selectedModel]);
+
+  // Models to show in the Model dropdown (memoized)
+  const filteredModels = useMemo(() => {
+    if (!selectedManufacturer) return [];
+    return models[selectedManufacturer] || [];
+  }, [models, selectedManufacturer]);
+
+  // UX: when manufacturer changes, reset model selection
   useEffect(() => {
-    if (cars?.cars) setFilteredCars(cars.cars);
-  }, [cars]);
+    setSelectedModel(''); // reset model on manuf change
+  }, [selectedManufacturer]);
 
-  // Extract unique manufacturers and models for filters
-  const manufacturers = useMemo(
-    () => [...new Set(cars?.cars?.map((car) => car.manufacturer))],
-    [cars]
-  );
-  const models = useMemo(() => [...new Set(cars?.cars?.map((car) => car.model))], [cars]);
+  const filterRef = useRef(null);
+  const scrollToFilters = () => filterRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-  const handleFilter = () => {
-    let result = cars?.cars || [];
-
-    if (search) {
-      result = result.filter((car) => car.name.toLowerCase().includes(search.toLowerCase()));
-    }
-    if (selectedManufacturer) {
-      result = result.filter((car) => car.manufacturer === selectedManufacturer);
-    }
-    if (selectedModel) {
-      result = result.filter((car) => car.model === selectedModel);
-    }
-
-    setFilteredCars(result);
-  };
-
-  useEffect(() => {
-    handleFilter();
-  }, [search, selectedManufacturer, selectedModel]);
+  const isFilterLoading = makeModelLoading;
 
   return (
-    <Box sx={{ padding: { xs: 2, md: 4 }, minHeight: '90vh', backgroundColor: '#fafafa' }}>
-      {/* --- Filter Section --- */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 2,
-          justifyContent: 'center',
-          mb: 4,
-        }}
-      >
-        <TextField
-          variant="outlined"
-          placeholder="Search car name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{ minWidth: 220 }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon color="action" />
-              </InputAdornment>
-            ),
-          }}
-        />
+    <Container maxWidth="xl" className="home-container">
+      <HeroSection onBookNowClick={scrollToFilters} />
 
-        <TextField
-          select
-          label="Manufacturer"
-          value={selectedManufacturer}
-          onChange={(e) => setSelectedManufacturer(e.target.value)}
-          sx={{ minWidth: 200 }}
-        >
-          <MenuItem value="">All</MenuItem>
-          {manufacturers.map((manu) => (
-            <MenuItem key={manu} value={manu}>
-              {manu}
-            </MenuItem>
-          ))}
-        </TextField>
+      {/* Filters */}
+      <Paper ref={filterRef} className="filter-box" elevation={5}>
+        <Grid container spacing={2} alignItems="center">
+          {/* Search */}
+          <Grid item xs={12} md={4}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Search car name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
 
-        <TextField
-          select
-          label="Model"
-          value={selectedModel}
-          onChange={(e) => setSelectedModel(e.target.value)}
-          sx={{ minWidth: 200 }}
-        >
-          <MenuItem value="">All</MenuItem>
-          {models.map((model) => (
-            <MenuItem key={model} value={model}>
-              {model}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Box>
+          {/* Manufacturer */}
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              fullWidth
+              select
+              label="Manufacturer"
+              value={selectedManufacturer}
+              onChange={(e) => setSelectedManufacturer(e.target.value)}
+              disabled={isFilterLoading}
+            >
+              <MenuItem value="">All Manufacturers</MenuItem>
+              {manufacturers.map((m) => (
+                <MenuItem key={m} value={m}>
+                  {m}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
 
-      {/* --- Cars Section --- */}
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-          <CircularProgress />
+          {/* Model */}
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              fullWidth
+              select
+              label="Model"
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={isFilterLoading || !selectedManufacturer}
+            >
+              <MenuItem value="">All Models</MenuItem>
+              {filteredModels.map((m) => (
+                <MenuItem key={m} value={m}>
+                  {m}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
+      </Paper>
+
+      {/* Car Listings */}
+      <Typography variant="h4" className="section-title">
+        Featured Rentals
+      </Typography>
+
+      {carsLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+          <CircularProgress size={60} />
         </Box>
       ) : (
         <Grid container spacing={3} justifyContent="center">
-          {filteredCars && filteredCars.length > 0 ? (
-            filteredCars.map((car) => (
+          {filteredCars.length > 0 ? (
+            filteredCars.map((car, index) => (
               <Grid item key={car._id} xs={12} sm={6} md={4} lg={3}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    boxShadow: 3,
-                    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: 6,
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={car.image}
-                    alt={car.name}
-                    sx={{
-                      objectFit: 'cover',
-                      borderTopLeftRadius: 12,
-                      borderTopRightRadius: 12,
-                    }}
-                  />
+                <Card className="car-card">
+                  {index < 3 && (
+                    <Chip
+                      icon={<LocalOfferIcon />}
+                      label="Popular"
+                      color="warning"
+                      size="small"
+                      className="popular-badge"
+                    />
+                  )}
+                  <CardMedia component="img" height="180" image={car.image} alt={car.name} />
                   <CardContent>
-                    <Typography variant="h6" component="div" sx={{ fontWeight: 600, mb: 1 }}>
+                    <Typography variant="h6" className="car-name">
                       {car.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <b>Manufacturer:</b> {car.manufacturer || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <b>Model:</b> {car.model || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      <b>Rent Per Hour:</b> ₹{car.rentPerHour}
+                    <Typography variant="body2" color="text.secondary" className="car-details">
+                      {car.manufacturer} — {car.model}
                     </Typography>
                   </CardContent>
-                  <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+                  <Box className="car-price">₹{car.rentPerHour}</Box>
+                  <CardActions>
                     <Button
+                      fullWidth
                       variant="contained"
                       color="warning"
                       onClick={() => history.push(`/booking/${car._id}`)}
-                      sx={{ borderRadius: 2, px: 3 }}
+                      sx={{ borderRadius: 2, fontWeight: 600 }}
                     >
                       Book Now
                     </Button>
@@ -185,14 +224,18 @@ function Home() {
               </Grid>
             ))
           ) : (
-            <Typography variant="h6" color="text.secondary" sx={{ mt: 5 }}>
-              No cars found.
-            </Typography>
+            <Grid item xs={12} sx={{ textAlign: 'center', mt: 8 }}>
+              <SentimentDissatisfiedIcon sx={{ fontSize: 60, color: 'text.secondary' }} />
+              <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
+                No cars found.
+              </Typography>
+              <Typography color="text.secondary">Try adjusting your search filters.</Typography>
+            </Grid>
           )}
         </Grid>
       )}
-    </Box>
+    </Container>
   );
 }
 
-export default Home;
+export default Products;
