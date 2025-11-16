@@ -7,7 +7,7 @@ export const bookCar = (reqObj) => async (dispatch) => {
   try {
     const { token } = JSON.parse(localStorage.getItem('user'));
     await axios
-      .post(`${API_URL}/api/bookings/bookcar`, reqObj, {
+      .post(`${API_URL}/api/v1/bookings/bookcar`, reqObj, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,7 +30,7 @@ export const getAllBookings = () => async (dispatch) => {
 
   try {
     const { token } = JSON.parse(localStorage.getItem('user'));
-    const response = await axios.get(`${API_URL}/api/bookings/getallbookings`, {
+    const response = await axios.get(`${API_URL}/api/v1/bookings/getallbookings`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -85,7 +85,7 @@ function Products() {
 
   // Filter cars dynamically
   const filteredCars = useMemo(() => {
-    const baseCars = cars.cars || []; // changed from cars?.cars
+    const baseCars = cars?.cars || [];
     return baseCars.filter((car) => {
       const matchesSearch = car.manufacturer.toLowerCase().includes(search.toLowerCase());
       const matchesManu = selectedManufacturer ? car.manufacturer === selectedManufacturer : true;
