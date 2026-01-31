@@ -1,23 +1,30 @@
 const initialState = {
-  token: null,
   user: null,
+  isAuthenticated: false,
+  csrfToken: null,
+  loading: true,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'Login_success': {
+    case 'PROFILE_SUCCESS':
       return {
         ...state,
-        token: action.payload.token,
-        user: action.payload.user,
+        user: action.payload,
+        isAuthenticated: true,
+        loading: false,
       };
-    }
+
     case 'LOGOUT':
       return {
-        ...state,
-        token: null,
         user: null,
+        isAuthenticated: false,
+        loading: false,
       };
+
+    case 'SET_CSRF_TOKEN':
+      return { ...state, csrfToken: action.payload };
+
     default:
       return state;
   }

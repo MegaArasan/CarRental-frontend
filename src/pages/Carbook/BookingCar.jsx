@@ -1,200 +1,5 @@
-// ///* eslint-disable react-hooks/exhaustive-deps */
-// //import React, { useState, useEffect } from "react";
-// //import { useSelector, useDispatch } from "react-redux";
-// //import { getAllCars } from "../../redux/actions/carsAction";
-// //import moment from "moment";
-// //import { bookCar } from "../../redux/actions/bookingActions";
-// //// import { useParams } from "react-router-dom";
-// //import {
-// //  Divider,
-// //  Box,
-// //  Button,
-// //  Checkbox,
-// //  Dialog,
-// //  CircularProgress,
-// //  Typography,
-// //  FormControlLabel,
-// //} from "@mui/material";
-// //import TextField from "@mui/material/TextField";
-// //import AdapterDateFns from "@mui/lab/AdapterDateFns";
-// //import LocalizationProvider from "@mui/lab/LocalizationProvider";
-// //import MobileDateRangePicker from "@mui/lab/MobileDateRangePicker";
-// //import "./BookingCar.css";
-// //
-
-// //
-// //function BookCar({ car }) {
-// //  const {user} = JSON.parse(localStorage.getItem("user"));
-// //  const username = user.username;
-// //  const dispatch = useDispatch();
-// //  const [from, setFrom] = useState();
-// //  const [to, setTo] = useState();
-// //  const [totalHours, setTotalHours] = useState(0);
-// //  const [driver, setdriver] = useState(false);
-// //  const [totalAmount, setTotalAmount] = useState(0);
-// //  const [showModal, setShowModal] = useState(false);
-// //  const [value, setvalue] = useState([null, null]);
-// //  const rent = car.rentPerHour;
-// //  useEffect(() => {
-// //    // console.log(totalHours, totalAmount, rent);
-// //    setTotalAmount(totalHours * rent);
-// //  }, [driver, totalHours, rent]);
-// //  useEffect(() => {
-// //    if (driver) return setTotalAmount(totalAmount + 30 * totalHours);
-// //  }, [driver]);
-// //  function selectTimeSlots(values) {
-// //    setvalue(values);
-// //    setFrom(moment(values[0]).format("MMM DD yyyy"));
-// //    setTo(moment(values[1]).format("MMM DD yyyy"));
-// //    // console.log(values[0], values[1]);
-// //    // console.log(Math.abs(values[1] - values[0]) / 36e5);
-// //    setTotalHours(Math.abs(values[1] - values[0]) / 36e5);
-// //  }
-// //  const onSubmit = () => {
-// //    const reqObj = {
-// //      user: user,
-// //      car: car._id,
-// //      totalHours: totalHours,
-// //      totalAmount: totalAmount,
-// //      driverRequired: driver,
-// //      bookedTimeSlots: {
-// //        from,
-// //        to,
-// //      },
-// //    };
-// //
-// //    dispatch(bookCar(reqObj));
-
-// //  };
-
-// //  return (
-// //    <section className="carpage">
-// //      <div className="carinfo">
-// //        <div>
-// //          <img src={car.image} alt={car.name} className="carimage" />
-// //        </div>
-// //        <div className="info">
-// //          {/* <Divider type="horizontal">Car Info</Divider> */}
-// //          <Typography variant="h5">
-// //            <b>Car Info</b>
-// //          </Typography>
-// //          <div style={{ textAlign: "center" }}>
-// //            <h6>
-// //              <b>{car.name}</b>
-// //            </h6>
-// //            <h6>
-// //              ₹{car.rentPerHour} <b>Rent Per hour</b> /-
-// //            </h6>
-// //            <h6>
-// //              <b>Fuel Type : </b>
-// //              {car.fuelType}
-// //            </h6>
-// //            <h6>
-// //              <b>Max Persons : </b>
-// //              {car.capacity}
-// //            </h6>
-// //          </div>
-// //        </div>
-// //      </div>
-// //      <br />
-// //      <Divider type="horizontal" />
-// //      <Typography variant="h5">Select Time Slots</Typography>
-// //      <div className="centcont">
-// //        <LocalizationProvider dateAdapter={AdapterDateFns}>
-// //          <MobileDateRangePicker
-// //            startText="start Date"
-// //            value={value}
-// //            onChange={selectTimeSlots}
-// //            renderInput={(startProps, endProps) => (
-// //              <React.Fragment>
-// //                <TextField {...startProps} />
-// //                <Box sx={{ mx: 2 }}> to </Box>
-// //                <TextField {...endProps} />
-// //              </React.Fragment>
-// //            )}
-// //          />
-// //        </LocalizationProvider>
-// //        <br />
-// //        <Button
-// //          className="btn1 mt-2"
-// //          variant="outlined"
-// //          onClick={() => {
-// //            setShowModal(true);
-// //          }}
-// //        >
-// //          See Booked Slots
-// //        </Button>
-// //      </div>
-// //      {from && to && (
-// //        <div>
-// //          <p>
-// //            Total Hours : <b>{totalHours}</b>
-// //          </p>
-// //          <p>
-// //            Rent Per Hour : <b>{car.rentPerHour}</b>
-// //          </p>
-// //          <FormControlLabel
-// //            control={
-// //              <Checkbox
-// //                onChange={(e) => {
-// //                  if (e.target.checked) {
-// //                    setdriver(true);
-// //                  } else {
-// //                    setdriver(false);
-// //                  }
-// //                }}
-// //              />
-// //            }
-// //            label="Driver Required"
-// //          />
-// //
-// //          {/* <label></label> */}
-// //
-// //          <h3>Total Amount : {totalAmount}</h3>
-// //          <Button variant="outlined" onClick={() => onSubmit()}>
-// //            Book Now
-// //          </Button>
-// //        </div>
-// //      )}
-// //
-// //      {car.name && (
-// //        <Dialog open={showModal} title="Booked time slots">
-// //          <div className="p-2">
-// //            {car.bookedTimeSlots.length > 0 &&
-// //              car.bookedTimeSlots.map((slot) => {
-// //                return (
-// //                  <Button className="btn1 mt-2">
-// //                    {slot.from} - {slot.to}
-// //                  </Button>
-// //                );
-// //              })}
-// //            {car.bookedTimeSlots.length === 0 ? (
-// //              <h6>Car is not booked yet</h6>
-// //            ) : (
-// //              ""
-// //            )}
-// //
-// //            <div className="text-right mt-5">
-// //              <Button
-// //                className="btn1"
-// //                onClick={() => {
-// //                  setShowModal(false);
-// //                }}
-// //              >
-// //                CLOSE
-// //              </Button>
-// //            </div>
-// //          </div>
-// //        </Dialog>
-// //      )}
-// //    </section>
-// //  );
-// //}
-// //
-// //export default BookingCar;
-
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCarById } from '../../redux/actions/carsAction';
 import moment from 'moment';
@@ -215,26 +20,58 @@ import {
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import MobileDateRangePicker from '@mui/lab/MobileDateRangePicker';
+import { MobileDateTimePicker } from '@mui/lab';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
 
 import './BookingCar.css';
+import ErrorModal from '../../components/ErrorModal';
+
+let razorpayLoaded = false;
 
 function loadScript(src) {
+  if (razorpayLoaded) return Promise.resolve(true);
+
   return new Promise((resolve) => {
     const script = document.createElement('script');
     script.src = src;
     script.onload = () => {
+      razorpayLoaded = true;
       resolve(true);
     };
-    script.onerror = () => {
-      resolve(false);
-    };
+    script.onerror = () => resolve(false);
     document.body.appendChild(script);
   });
 }
+
+let googleMapsLoaded = false;
+
+const tryLoadGoogleMaps = () =>
+  new Promise((resolve) => {
+    if (googleMapsLoaded && window.google?.maps?.places) {
+      return resolve(true);
+    }
+
+    // If no API key, fail silently
+    if (!process.env.REACT_APP_GOOGLE_MAPS_KEY) {
+      return resolve(false);
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&libraries=places`;
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => {
+      googleMapsLoaded = true;
+      resolve(true);
+    };
+
+    script.onerror = () => resolve(false);
+
+    document.body.appendChild(script);
+  });
 
 function BookingCar({ match, history }) {
   const { car, loading } = useSelector((s) => s.carsReducer);
@@ -259,9 +96,23 @@ function BookingCar({ match, history }) {
 }
 
 function BookCar({ car, onBack }) {
-  const { user } = JSON.parse(localStorage.getItem('user'));
+  const { user } = useSelector((state) => state.authReducer);
+  const [paymentStatus, setPaymentStatus] = useState(null); // success | failure
+  const [pickupLocation, setPickupLocation] = useState('');
+  const [dropLocation, setDropLocation] = useState('');
+  const [errorModal, setErrorModal] = useState({
+    open: false,
+    message: '',
+  });
+  const showError = (message) => {
+    setErrorModal({
+      open: true,
+      message,
+    });
+  };
 
   const dispatch = useDispatch();
+  const [bookingInProgress, setBookingInProgress] = useState(false);
 
   // booking state
   const [range, setRange] = useState([null, null]);
@@ -272,6 +123,16 @@ function BookCar({ car, onBack }) {
 
   // derived
   const hasRange = range[0] && range[1];
+  const overlap = hasOverlap(range, car.bookings);
+  const isDriverInfoInvalid = driver && (!pickupLocation.trim() || !dropLocation.trim());
+
+  const formatForBackend = (date) => moment(date).local().format('MMM DD YYYY HH:mm');
+  const FUTURE_BUFFER_MINUTES = 5;
+  const nowPlusBuffer = new Date(Date.now() + FUTURE_BUFFER_MINUTES * 60 * 1000);
+  const nowWithBuffer = moment().add(FUTURE_BUFFER_MINUTES, 'minutes');
+  const isPastPickup = range[0] && moment(range[0]).isSameOrBefore(nowWithBuffer);
+  const MIN_HOURS = 1;
+  const isTooShort = hasRange && totalHours < MIN_HOURS;
 
   // calculate pricing
   useEffect(() => {
@@ -286,38 +147,122 @@ function BookCar({ car, onBack }) {
 
     let amount = hours * car.rentPerHour;
     if (driver) amount += hours * 30;
-    setTotal(amount);
+    setTotal(Math.round(amount));
   }, [range, driver, car.rentPerHour]);
 
-  const handleBook = () => {
-    if (!hasRange) return;
+  // Map loading
+  const [mapsAvailable, setMapsAvailable] = useState(false);
+  const pickupRef = useRef(null);
+  const dropRef = useRef(null);
+
+  useEffect(() => {
+    if (!driver) return;
+
+    tryLoadGoogleMaps().then((loaded) => {
+      setMapsAvailable(loaded);
+
+      if (!loaded) return;
+
+      if (pickupRef.current) {
+        const pickupAuto = new window.google.maps.places.Autocomplete(pickupRef.current, {
+          types: ['geocode'],
+        });
+
+        pickupAuto.addListener('place_changed', () => {
+          const place = pickupAuto.getPlace();
+          setPickupLocation(place.formatted_address || '');
+        });
+      }
+
+      if (dropRef.current) {
+        const dropAuto = new window.google.maps.places.Autocomplete(dropRef.current, {
+          types: ['geocode'],
+        });
+        dropAuto.addListener('place_changed', () => {
+          const place = dropAuto.getPlace();
+          setDropLocation(place.formatted_address || '');
+        });
+      }
+    });
+  }, [driver]);
+
+  const handleBook = async () => {
+     if (bookingInProgress) return;
+     setBookingInProgress(true)
+    if (!hasRange) {
+      setBookingInProgress(false);
+      return;
+    }
+
+    // 🔴 FINAL SAFETY CHECK (authoritative)
+    const overlapNow = hasOverlap(range, car.bookings);
+    if (overlapNow) {
+      showError('Selected dates overlap with an existing booking');
+      return;
+    }
+
+    if (isPastPickup) {
+      showError('Pickup time must be in the future');
+      return;
+    }
+
+    if (isTooShort) {
+      showError('Minimum booking duration is 1 hour');
+      return;
+    }
+
+    if (isDriverInfoInvalid) {
+      showError('Pickup and drop locations are required when driver is selected');
+      return;
+    }
 
     const payload = {
-      user,
       car: car._id,
       totalHours,
       totalAmount: total,
       driverRequired: driver,
       bookedTimeSlots: {
-        from: moment(range[0]).format('MMM DD, yyyy'),
-        to: moment(range[1]).format('MMM DD, yyyy'),
+        from: formatForBackend(range[0]),
+        to: formatForBackend(range[1]),
       },
+      pickupDate: formatForBackend(range[0]),
+      dropDate: formatForBackend(range[1]),
+      ...(driver && {
+        pickupLocation,
+        dropLocation,
+      }),
     };
 
-    dispatch(bookCar(payload));
-    setTimeout(() => {
-      displayRazorpay();
-    }, 500);
+    const result = await dispatch(bookCar(payload));
+
+    if (!result?.success) {
+      showError(result?.data || result.message);
+      setBookingInProgress(false);
+      return;
+    }
+    displayRazorpay();
+    setBookingInProgress(false);
   };
 
   async function displayRazorpay() {
     const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
     if (!res) {
-      alert('Razorpay sdk failed to load.Are you online');
+      showError('Razorpay sdk failed to load.Are you online');
       return;
     }
 
-    const data1 = JSON.parse(localStorage.getItem('order'));
+    const orderRaw = localStorage.getItem('order');
+    if (!orderRaw) {
+      showError('Payment cannot be initiated. Order not created.');
+      return;
+    }
+
+    const data1 = JSON.parse(orderRaw);
+    if (!data1?.data?.id || !data1?.data?.amount) {
+      showError('Invalid payment order. Please try again.');
+      return;
+    }
+
     const data = data1.data;
     // console.log(data1);
     const options = {
@@ -333,6 +278,13 @@ function BookCar({ car, onBack }) {
         name: 'user', // TODO: username has to be passed here
         contact: user.phoneno,
         email: user.email,
+      },
+      handler: () => {
+        setPaymentStatus('success');
+        window.location.href = '/my-bookings';
+      },
+      modal: {
+        ondismiss: () => setPaymentStatus('failure'),
       },
     };
     const paymentObject = new window.Razorpay(options);
@@ -362,6 +314,11 @@ function BookCar({ car, onBack }) {
     car.location?.city && car.location?.state
       ? `${car.location.city}, ${car.location.state}`
       : 'Available in your city';
+  console.log(!hasRange, totalHours, overlap, isPastPickup, isDriverInfoInvalid);
+  console.log({
+    pickup: range[0]?.toString(),
+    nowWithBuffer: nowWithBuffer.toString(),
+  });
 
   return (
     <div className="bc-page">
@@ -525,16 +482,40 @@ function BookCar({ car, onBack }) {
             <Divider className="bc-divider" />
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MobileDateRangePicker
-                startText="Start date & time"
-                endText="End date & time"
-                value={range}
-                onChange={(newVal) => setRange(newVal)}
-                renderInput={(startProps, endProps) => (
-                  <div className="bc-date-fields">
-                    <TextField {...startProps} size="small" fullWidth className="bc-date-input" />
-                    <TextField {...endProps} size="small" fullWidth className="bc-date-input" />
-                  </div>
+              {overlap && (
+                <Typography className="bc-small-muted" color="error">
+                  Selected dates overlap with an existing booking
+                </Typography>
+              )}
+              <MobileDateTimePicker
+                label="Pickup date & time"
+                value={range[0]}
+                minDateTime={nowPlusBuffer}
+                onChange={(val) => setRange([val, range[1]])}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    sx={{ margin: '10px' }}
+                    size="small"
+                    fullWidth
+                    className="bc-date-input"
+                  />
+                )}
+              />
+
+              <MobileDateTimePicker
+                label="Drop date & time"
+                value={range[1]}
+                minDateTime={range[0] || nowPlusBuffer}
+                onChange={(val) => setRange([range[0], val])}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    sx={{ margin: '10px' }}
+                    size="small"
+                    fullWidth
+                    className="bc-date-input"
+                  />
                 )}
               />
             </LocalizationProvider>
@@ -550,6 +531,60 @@ function BookCar({ car, onBack }) {
               }
               label="Add driver (₹30/hr)"
             />
+
+            {driver && (
+              <div className="bc-driver-locations">
+                {/* Pickup */}
+                {mapsAvailable ? (
+                  <TextField
+                    label="Pickup location"
+                    size="small"
+                    sx={{ margin: '10px' }}
+                    fullWidth
+                    inputRef={pickupRef}
+                    placeholder="Search pickup location"
+                  />
+                ) : (
+                  <TextField
+                    label="Pickup location"
+                    size="small"
+                    sx={{ margin: '10px' }}
+                    fullWidth
+                    value={pickupLocation}
+                    onChange={(e) => setPickupLocation(e.target.value)}
+                    placeholder="Enter pickup location"
+                  />
+                )}
+
+                {/* Drop */}
+                {mapsAvailable ? (
+                  <TextField
+                    label="Drop location"
+                    size="small"
+                    sx={{ margin: '10px' }}
+                    fullWidth
+                    inputRef={dropRef}
+                    placeholder="Search drop location"
+                  />
+                ) : (
+                  <TextField
+                    label="Drop location"
+                    size="small"
+                    sx={{ margin: '10px' }}
+                    fullWidth
+                    value={dropLocation}
+                    onChange={(e) => setDropLocation(e.target.value)}
+                    placeholder="Enter drop location"
+                  />
+                )}
+
+                {!mapsAvailable && (
+                  <Typography className="bc-small-muted">
+                    Map search unavailable — you can type locations manually
+                  </Typography>
+                )}
+              </div>
+            )}
 
             {hasRange && (
               <div className="bc-summary">
@@ -574,12 +609,42 @@ function BookCar({ car, onBack }) {
                 </div>
               </div>
             )}
+            {driver && isDriverInfoInvalid && (
+              <Typography className="bc-small-muted" color="error">
+                Pickup and drop locations are required when driver is selected
+              </Typography>
+            )}
+            {isPastPickup && (
+              <Typography className="bc-small-muted" color="error">
+                Pickup time must be in the future
+              </Typography>
+            )}
+
+            {isDriverInfoInvalid && (
+              <Typography className="bc-small-muted" color="error">
+                Pickup and drop locations are required when driver is selected
+              </Typography>
+            )}
+
+            {overlap && (
+              <Typography className="bc-small-muted" color="error">
+                Selected dates overlap with an existing booking
+              </Typography>
+            )}
 
             <Button
               variant="contained"
               fullWidth
               className="bc-btn-primary"
-              disabled={!hasRange || totalHours <= 0}
+              // disabled={!hasRange || totalHours <= 0}
+              disabled={
+                !hasRange ||
+                isTooShort ||
+                overlap ||
+                isPastPickup ||
+                isDriverInfoInvalid ||
+                bookingInProgress
+              }
               onClick={handleBook}
             >
               Proceed to pay
@@ -601,6 +666,12 @@ function BookCar({ car, onBack }) {
               </Typography>
             )}
           </Box>
+          <ErrorModal
+            open={errorModal.open}
+            title="Error while booking a car"
+            message={errorModal.message}
+            onClose={() => setErrorModal({ open: false, message: '' })}
+          />
         </aside>
       </div>
 
@@ -639,5 +710,19 @@ function BookCar({ car, onBack }) {
     </div>
   );
 }
+
+const hasOverlap = (range, bookings = []) => {
+  if (!range[0] || !range[1] || !bookings.length) return false;
+
+  const start = moment(range[0]).valueOf();
+  const end = moment(range[1]).valueOf();
+
+  return bookings.some((b) => {
+    const bStart = moment(b.from, 'MMM DD YYYY HH:mm').valueOf();
+    const bEnd = moment(b.to, 'MMM DD YYYY HH:mm').valueOf();
+
+    return start < bEnd && end > bStart;
+  });
+};
 
 export default BookingCar;

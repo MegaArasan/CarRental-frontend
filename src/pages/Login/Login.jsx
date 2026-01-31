@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './Login.css';
 import car from '../../assets/background.png';
+import ErrorModal from '../../components/ErrorModal';
 
 function Login() {
   const history = useHistory();
@@ -21,15 +22,32 @@ function Login() {
     },
     validationSchema: formvalidationSchema,
     onSubmit: (values) => {
-      dispatch(userLogin(values));
+      dispatch(userLogin(values)).then((result) => {
+        console.log(result);
+        if (!result.success) {
+          showError(result?.data);
+        }
+        window.location.href = '/home';
+      });
     },
   });
+
   const [text, setText] = useState('Show');
   const [visible, setVisible] = useState('password');
   const icon = visible === 'password' ? <VisibilityIcon /> : <VisibilityOffIcon />;
   const visibility = () => {
     setVisible((visible) => (visible === 'password' ? 'text' : 'password'));
     setText((text) => (text === 'Show' ? 'Hide' : 'Show'));
+  };
+  const [errorModal, setErrorModal] = useState({
+    open: false,
+    message: '',
+  });
+  const showError = (message) => {
+    setErrorModal({
+      open: true,
+      message,
+    });
   };
   return (
     <div className="login-container">
@@ -104,6 +122,12 @@ function Login() {
           Register
         </button>
       </form>
+      <ErrorModal
+        open={errorModal.open}
+        title="Error while logging in"
+        message={errorModal.message}
+        onClose={() => setErrorModal({ open: false, message: '' })}
+      />
     </div>
   );
 }

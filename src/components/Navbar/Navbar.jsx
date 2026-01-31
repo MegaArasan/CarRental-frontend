@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AccountCircle, Menu, Close } from '@mui/icons-material';
-import './Navbar.css'; // Make sure you have this CSS
+import './Navbar.css';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../redux/actions/userActions'; // Make sure you have this CSS
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,8 +15,9 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleUserDropdown = () => setUserDropdown(!userDropdown);
 
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.clear();
+   dispatch(userLogout());
     window.location.reload(false);
     window.location.href = '/';
   };

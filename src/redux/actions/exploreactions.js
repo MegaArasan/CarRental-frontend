@@ -1,18 +1,31 @@
-import axios from 'axios';
-import { API_URL } from '../../globalconstant';
+import api from '../../utils/api';
 
+/**
+ * EXPLORE BOOKINGS
+ * - Uses cookie-based auth automatically
+ * - No token
+ * - No localStorage
+ */
 export const exploreBookings = () => async (dispatch) => {
   dispatch({ type: 'LOADING', payload: true });
+
   try {
-    const response = await axios.get(`${API_URL}/api/v1/explore`, {
-      withCredentials: true,
+    const { data } = await api.get('/explore');
+
+    dispatch({
+      type: 'EXPLORE',
+      payload: data.data,
     });
 
-    dispatch({ type: 'EXPLORE', payload: response.data.data });
     dispatch({ type: 'LOADING', payload: false });
   } catch (error) {
-    console.log(error);
-    window.alert(error);
+    console.error(error);
+
+    dispatch({
+      type: 'ERROR',
+      payload: error.response?.data?.message || 'Failed to load explore data',
+    });
+
     dispatch({ type: 'LOADING', payload: false });
   }
 };

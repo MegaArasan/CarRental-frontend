@@ -17,7 +17,7 @@ const getRandomCarImage = () => {
 };
 
 const HotDealsSection = () => {
-  const { explore } = useSelector((state) => state.carsReducer || { explore: [] });
+  const explore = useSelector((state) => state.carsReducer.explore);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

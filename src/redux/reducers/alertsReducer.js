@@ -5,19 +5,17 @@ const initialData = {
 
 export const alertsReducer = (state = initialData, action) => {
   switch (action.type) {
-    case 'LOADING': {
+    case 'LOADING':
       return {
         ...state,
         loading: action.payload,
       };
-    }
 
-    case 'ERROR': {
+    case 'ERROR':
       return {
         ...state,
         error: action.payload,
       };
-    }
 
     default:
       return state;

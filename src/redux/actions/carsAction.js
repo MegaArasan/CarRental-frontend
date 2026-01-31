@@ -1,15 +1,18 @@
-import axios from 'axios';
-import { API_URL } from '../../globalconstant.js';
+import api from '../../utils/api';
 
+/**
+ * GET ALL CARS
+ */
 export const getAllCars = () => async (dispatch) => {
   dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+
   try {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    const response = await axios.get(`${API_URL}/api/v1/cars`, {
-      headers: { Authorization: `Bearer ${token}` },
-      withCredentials: true,
+    const { data } = await api.get('/cars');
+
+    dispatch({
+      type: 'GET_ALL_CARS',
+      payload: data.data,
     });
-    dispatch({ type: 'GET_ALL_CARS', payload: response.data.data });
   } catch (error) {
     dispatch({
       type: 'GET_ALL_CARS_FAIL',
@@ -18,31 +21,42 @@ export const getAllCars = () => async (dispatch) => {
   }
 };
 
-export const getCarById = (reqObj) => async (dispatch) => {
-  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
-  const { carId } = reqObj;
-  try {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    const response = await axios.get(`${API_URL}/api/v1/cars?id=${carId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      withCredentials: true,
-    });
-    dispatch({ type: 'GET_CAR_ID', payload: response.data.data });
-  } catch (error) {
-    dispatch({
-      type: 'GET_ALL_CARS_FAIL',
-      payload: error.response?.data?.message || error.message,
-    });
-  }
-};
+/**
+ * GET CAR BY ID
+ */
+export const getCarById =
+  ({ carId }) =>
+  async (dispatch) => {
+    dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
 
+    try {
+      const { data } = await api.get(`/cars?id=${carId}`);
+
+      dispatch({
+        type: 'GET_CAR_ID',
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'GET_ALL_CARS_FAIL',
+        payload: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
+/**
+ * GET ALL MAKE & MODEL
+ */
 export const getAllMakeModel = () => async (dispatch) => {
   dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+
   try {
-    const response = await axios.get(`${API_URL}/api/v1/cars/getMakeAndModel`, {
-      withCredentials: true,
+    const { data } = await api.get('/cars/getMakeAndModel');
+
+    dispatch({
+      type: 'GET_ALL_MAKE_MODEL',
+      payload: data.data,
     });
-    dispatch({ type: 'GET_ALL_MAKE_MODEL', payload: response.data.data });
   } catch (error) {
     dispatch({
       type: 'GET_ALL_CARS_FAIL',

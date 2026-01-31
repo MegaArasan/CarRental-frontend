@@ -16,6 +16,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// TODO: Need to focus on the car booking page
-//  Need to handle the cookie in fronetnd nstead user storign in login
