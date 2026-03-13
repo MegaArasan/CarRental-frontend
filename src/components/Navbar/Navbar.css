@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #C62828;
+  background-color: #c62828;
   padding: 10px 20px;
   color: white;
   position: relative;
@@ -13,7 +13,7 @@
 .navbar-logo {
   font-size: 28px;
   font-weight: bold;
-  font-family: 'Aladin',sans-serif;
+  font-family: 'Aladin', sans-serif;
 }
 
 .logo-bold {
@@ -63,7 +63,7 @@
   width: 150px;
   top: 40px;
   right: 0;
-  background: #C62828;
+  background: #c62828;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -99,7 +99,7 @@
   position: absolute;
   top: 60px;
   right: 0;
-  background: #C62828;
+  background: #c62828;
   width: 100%;
   padding: 1rem;
   text-align: center;

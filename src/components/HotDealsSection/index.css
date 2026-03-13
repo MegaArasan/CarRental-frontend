@@ -1,0 +1,13 @@
+.hot-deals-heading {
+  text-align: center; /* center the heading */
+  position: relative;
+}
+
+.hot-deals-heading::after {
+  content: '';
+  width: 60px;
+  height: 3px;
+  background: #d32f2f;
+  display: block;
+  margin: 0.5rem auto 0; /* spacing below the heading */
+}

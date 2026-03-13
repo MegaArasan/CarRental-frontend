@@ -1,39 +1,47 @@
-import axios from "axios";
-import { API_URL } from "../../globalconstant";
+import api from '../../utils/api';
 
+/**
+ * BOOK CAR
+ * - Cookie auth
+ * - CSRF auto attached
+ * - No Authorization header
+ */
 export const bookCar = (reqObj) => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
 
   try {
-    const {token}=JSON.parse(localStorage.getItem("user"));
-    await axios.post(`${API_URL}/api/bookings/bookcar`, reqObj,{headers:{
-        Authorization:`Bearer ${token}`
-      }}).then((data) => {
-      console.log(data);
-      localStorage.setItem("order", JSON.stringify(data));
-    });
+    const { data } = await api.post('/bookings/bookcar', reqObj);
 
-    dispatch({ type: "LOADING", payload: false });    
+    // Razorpay order only (allowed)
+    localStorage.setItem('order', JSON.stringify(data));
+
+    dispatch({ type: 'LOADING', payload: false });
+    return { success: true, data: data };
   } catch (error) {
-    console.log(error);
-    window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    console.error(error);
+    dispatch({ type: 'LOADING', payload: false });
+    return { success: false, data: error.response?.data?.message || 'Booking failed' };
   }
 };
 
+/**
+ * GET ALL BOOKINGS
+ * - Auth via cookie
+ */
 export const getAllBookings = () => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'LOADING', payload: true });
 
   try {
-    const {token}=JSON.parse(localStorage.getItem("user"));
-    const response = await axios.get(`${API_URL}/api/bookings/getallbookings`,{headers:{
-      Authorization:`Bearer ${token}`
-    }});
-    dispatch({ type: "GET_ALL_BOOKINGS", payload: response.data });
-    dispatch({ type: "LOADING", payload: false });
+    const { data } = await api.get('/bookings/getallbookings');
+
+    dispatch({
+      type: 'GET_ALL_BOOKINGS',
+      payload: data.data,
+    });
+
+    dispatch({ type: 'LOADING', payload: false });
   } catch (error) {
-    console.log(error);
-    // window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    console.error(error);
+    dispatch({ type: 'LOADING', payload: false });
   }
 };

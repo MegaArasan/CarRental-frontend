@@ -3,20 +3,6 @@
   margin: 2rem 0;
   padding: 1em;
 }
-.section h2 {
-  font-size: 1.75rem;
-  color: #000;
-  margin-bottom: 1rem;
-  text-align: center;
-  position: relative;
-}
-.section h2::after {
-  content: "";
-  width: 60px; height: 3px;
-  background: #d32f2f;
-  display: block;
-  margin: 0.5rem auto 0;
-}
 
 /* --- Quick‑Search --- */
 .quick-search {
@@ -61,11 +47,13 @@
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .action-btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Hot Deals --- */
@@ -84,7 +72,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 .promo-card:hover {
   background: #222;
@@ -101,8 +91,10 @@
 
 .promo-img {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 /* Text area */
@@ -127,11 +119,11 @@
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s;
 }
 .car-card:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 .carback {
   width: 100%;
@@ -164,4 +156,70 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.section-header .underline {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #d32f2f;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.car-card {
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.carback {
+  width: 100%;
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+}
+
+.car-info {
+  margin-top: 0.5rem;
+}
+
+.car-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.car-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.25rem 0 0;
 }

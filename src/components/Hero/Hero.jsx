@@ -1,8 +1,13 @@
-import React from "react";
-import { motion } from "framer-motion";
-import "./Hero.css";
+import React from 'react';
+import { motion } from 'framer-motion';
+import './Hero.css';
 
-const Hero = ({ headline = "Ride in Style", subtext = "Find your perfect car today", ctaText = "Book Now", onCtaClick }) => {
+const Hero = ({
+  headline = 'Ride in Style',
+  subtext = 'Find your perfect car today',
+  ctaText = 'Book Now',
+  onCtaClick,
+}) => {
   return (
     <section className="hero-wrapper">
       <div className="hero-background" />
@@ -11,7 +16,7 @@ const Hero = ({ headline = "Ride in Style", subtext = "Find your perfect car tod
         className="hero-content"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <motion.h1
           className="hero-headline"

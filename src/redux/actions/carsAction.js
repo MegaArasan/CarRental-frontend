@@ -1,16 +1,66 @@
-import axios from "axios";
-import { API_URL } from "../../globalconstant.js";
+import api from '../../utils/api';
 
+/**
+ * GET ALL CARS
+ */
 export const getAllCars = () => async (dispatch) => {
-  dispatch({ type: "LOADING", payload: true });
+  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+
   try {
-    const {token}=JSON.parse(localStorage.getItem("user"));
-    const response = await axios.get(`${API_URL}/api/cars/getallcars`,{ headers:{ Authorization:`Bearer ${token}`}});
-    dispatch({ type: "GET_ALL_CARS", payload: response.data.data });
-    dispatch({ type: "LOADING", payload: false });
+    const { data } = await api.get('/cars');
+
+    dispatch({
+      type: 'GET_ALL_CARS',
+      payload: data.data,
+    });
   } catch (error) {
-    console.log(error);
-    window.alert(error);
-    dispatch({ type: "LOADING", payload: false });
+    dispatch({
+      type: 'GET_ALL_CARS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};
+
+/**
+ * GET CAR BY ID
+ */
+export const getCarById =
+  ({ carId }) =>
+  async (dispatch) => {
+    dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+
+    try {
+      const { data } = await api.get(`/cars?id=${carId}`);
+
+      dispatch({
+        type: 'GET_CAR_ID',
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'GET_ALL_CARS_FAIL',
+        payload: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
+/**
+ * GET ALL MAKE & MODEL
+ */
+export const getAllMakeModel = () => async (dispatch) => {
+  dispatch({ type: 'GET_ALL_CARS_REQUEST', payload: true });
+
+  try {
+    const { data } = await api.get('/cars/getMakeAndModel');
+
+    dispatch({
+      type: 'GET_ALL_MAKE_MODEL',
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: 'GET_ALL_CARS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
