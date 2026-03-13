@@ -16,7 +16,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// Only the pending frontend work remains:
-// implement role-based access on frontend so that admin users only can add new cars, manage offers, and access the reports section.
-// The backend implementation is already completed.

@@ -7,6 +7,7 @@ import { alertsReducer } from './reducers/alertsReducer.js';
 import { bookingsReducer } from './reducers/bookingsReducer.js';
 import { authReducer } from './reducers/authReducer';
 import { profileReducer } from './reducers/profileReducer';
+import { adminReducer } from './reducers/adminReducer';
 
 const composeEnhancers = composeWithDevTools({});
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   bookingsReducer,
   authReducer,
   profileReducer,
+  adminReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

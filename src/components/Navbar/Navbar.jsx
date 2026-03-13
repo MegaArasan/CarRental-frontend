@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AccountCircle, Menu, Close } from '@mui/icons-material';
 import './Navbar.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../../redux/actions/userActions'; // Make sure you have this CSS
 
 const Navbar = () => {
@@ -16,10 +16,11 @@ const Navbar = () => {
   const toggleUserDropdown = () => setUserDropdown(!userDropdown);
 
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.authReducer);
+  const isAdmin = user?.role === 'admin';
+
   const handleLogout = () => {
-   dispatch(userLogout());
-    window.location.reload(false);
-    window.location.href = '/';
+    dispatch(userLogout());
   };
 
   // Close user dropdown on outside click
@@ -63,6 +64,19 @@ const Navbar = () => {
         <li>
           <NavLink to="/cars">Cars</NavLink>
         </li>
+        {isAdmin && (
+          <>
+            <li>
+              <NavLink to="/admin/cars/new">Add Car</NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/offers">Offers</NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/reports">Reports</NavLink>
+            </li>
+          </>
+        )}
       </ul>
 
       <div className="nav-right">
@@ -73,6 +87,7 @@ const Navbar = () => {
             <div className="dropdown">
               <NavLink to="/profile">Profile</NavLink>
               <NavLink to="/my-bookings">My Bookings</NavLink>
+              {isAdmin && <NavLink to="/admin/reports">Admin Reports</NavLink>}
               <div onClick={handleLogout}>Logout</div>
             </div>
           )}
@@ -98,13 +113,32 @@ const Navbar = () => {
                 Cars
               </NavLink>
             </li>
+            {isAdmin && (
+              <>
+                <li>
+                  <NavLink to="/admin/cars/new" onClick={toggleMenu}>
+                    Add Car
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin/offers" onClick={toggleMenu}>
+                    Offers
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin/reports" onClick={toggleMenu}>
+                    Reports
+                  </NavLink>
+                </li>
+              </>
+            )}
             <li>
               <NavLink to="/profile" onClick={toggleMenu}>
                 Profile
               </NavLink>
             </li>
             <li>
-              <NavLink to="/bookings" onClick={toggleMenu}>
+              <NavLink to="/my-bookings" onClick={toggleMenu}>
                 My Bookings
               </NavLink>
             </li>

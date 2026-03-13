@@ -15,7 +15,6 @@ function Profile() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
   const { uploading, updating } = useSelector((state) => state.profileReducer);
-  console.log(user)
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({
     username: user.username || '',

@@ -10,6 +10,7 @@ import BookingCar from './pages/Carbook/BookingCar.jsx';
 import Forgotpassword from './pages/ForgotPassword/Forgotpassword.jsx';
 import Resetpassword from './pages/ResetPassword/Resetpassword.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx';
 import UserBookings from './pages/BookingHistory/UserBookings';
 import Products from './pages/Products/Products';
 
@@ -19,6 +20,9 @@ import { fetchCsrfToken } from './redux/actions/userActions';
 import { fetchProfile } from './redux/actions/userActions';
 import CarLoader from './components/CarLoader/CarLoader';
 import Profile from './pages/profile';
+import AdminCars from './pages/Admin/AdminCars';
+import AdminOffers from './pages/Admin/AdminOffers';
+import AdminReports from './pages/Admin/AdminReports';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +62,9 @@ function App() {
               <Route path="/booking/:carid" exact component={BookingCar} />
               <Route path="/my-bookings" exact component={UserBookings} />
               <Route path="/profile" exact component={Profile} />
+              <ProtectedRoute path="/admin/cars/new" exact component={AdminCars} allowedRoles={['admin']} />
+              <ProtectedRoute path="/admin/offers" exact component={AdminOffers} allowedRoles={['admin']} />
+              <ProtectedRoute path="/admin/reports" exact component={AdminReports} allowedRoles={['admin']} />
             </Paper>
           )}
         </Route>
