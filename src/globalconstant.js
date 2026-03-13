@@ -1,5 +1,5 @@
-//export const API_URL = "https://car-ren-tal.herokuapp.com";
-export const API_URL = 'http://localhost:8000/api/v1';
+export const API_URL = 'https://car-rental-backend-liard.vercel.app';
+// export const API_URL = 'http://localhost:8000/api/v1';
 
 export const carImages = [
   'https://images.unsplash.com/photo-1503376780353-7e6692767b70', // red sports car
