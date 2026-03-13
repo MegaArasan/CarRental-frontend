@@ -98,6 +98,7 @@ function BookingCar({ match, history }) {
 function BookCar({ car, onBack }) {
   const { user } = useSelector((state) => state.authReducer);
   const [paymentStatus, setPaymentStatus] = useState(null); // success | failure
+  console.log(paymentStatus);
   const [pickupLocation, setPickupLocation] = useState('');
   const [dropLocation, setDropLocation] = useState('');
   const [errorModal, setErrorModal] = useState({
@@ -194,7 +195,7 @@ function BookCar({ car, onBack }) {
       return;
     }
 
-    // 🔴 FINAL SAFETY CHECK (authoritative)
+    // FINAL SAFETY CHECK (authoritative)
     const overlapNow = hasOverlap(range, car.bookings);
     if (overlapNow) {
       showError('Selected dates overlap with an existing booking');
