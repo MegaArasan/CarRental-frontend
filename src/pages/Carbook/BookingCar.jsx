@@ -188,8 +188,8 @@ function BookCar({ car, onBack }) {
   }, [driver]);
 
   const handleBook = async () => {
-     if (bookingInProgress) return;
-     setBookingInProgress(true)
+    if (bookingInProgress) return;
+    setBookingInProgress(true);
     if (!hasRange) {
       setBookingInProgress(false);
       return;

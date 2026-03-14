@@ -26,7 +26,9 @@ function Login() {
         console.log(result);
         if (!result.success) {
           showError(result?.data);
+          return;
         }
+
         window.location.href = '/home';
       });
     },
@@ -115,7 +117,7 @@ function Login() {
           LOGIN
         </Button>
 
-        <label for="register" className="account">
+        <label htmlFor="register" className="account">
           Don't have an Account?
         </label>
         <button id="register" color="inherit" onClick={() => history.push('/register')}>

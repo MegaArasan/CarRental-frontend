@@ -130,8 +130,7 @@ export const sampleBookings = [
       _id: 'car_001',
       name: 'Honda City ZX',
       rentPerHour: 500,
-      image:
-        'https://images.unsplash.com/photo-1605559424843-9f6a44b4a5b5',
+      image: 'https://images.unsplash.com/photo-1605559424843-9f6a44b4a5b5',
     },
   },
   {
@@ -148,8 +147,7 @@ export const sampleBookings = [
       _id: 'car_002',
       name: 'Hyundai Creta SX',
       rentPerHour: 600,
-      image:
-        'https://images.unsplash.com/photo-1619682817481-e994891cd1f5',
+      image: 'https://images.unsplash.com/photo-1619682817481-e994891cd1f5',
     },
   },
   {
@@ -166,8 +164,7 @@ export const sampleBookings = [
       _id: 'car_003',
       name: 'Toyota Innova Crysta',
       rentPerHour: 600,
-      image:
-        'https://images.unsplash.com/photo-1583267741293-7c1f0c5d4b1f',
+      image: 'https://images.unsplash.com/photo-1583267741293-7c1f0c5d4b1f',
     },
   },
 ];

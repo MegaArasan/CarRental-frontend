@@ -26,33 +26,35 @@ const normalizeOffer = (offer) => ({
   isActive: Boolean(offer.isActive),
 });
 
-export const uploadAdminAsset = (file, type = 'Car') => async (dispatch) => {
-  dispatch({ type: 'ADMIN_UPLOAD_ASSET_REQUEST' });
+export const uploadAdminAsset =
+  (file, type = 'Car') =>
+  async (dispatch) => {
+    dispatch({ type: 'ADMIN_UPLOAD_ASSET_REQUEST' });
 
-  try {
-    const formData = new FormData();
-    formData.append('files', file);
-    formData.append('type', type);
+    try {
+      const formData = new FormData();
+      formData.append('files', file);
+      formData.append('type', type);
 
-    const response = await api.post('/attachment/add', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+      const response = await api.post('/attachment/add', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
-    const uploaded = response.data?.data?.[0];
-    const assetId = uploaded?._id || uploaded?.id || uploaded?.gridFsFileId;
+      const uploaded = response.data?.data?.[0];
+      const assetId = uploaded?._id || uploaded?.id || uploaded?.gridFsFileId;
 
-    dispatch({ type: 'ADMIN_UPLOAD_ASSET_SUCCESS' });
-    return {
-      success: true,
-      assetId,
-      asset: uploaded,
-    };
-  } catch (error) {
-    const message = getMessage(error, 'Failed to upload asset');
-    dispatch({ type: 'ADMIN_UPLOAD_ASSET_FAIL', payload: message });
-    return { success: false, message };
-  }
-};
+      dispatch({ type: 'ADMIN_UPLOAD_ASSET_SUCCESS' });
+      return {
+        success: true,
+        assetId,
+        asset: uploaded,
+      };
+    } catch (error) {
+      const message = getMessage(error, 'Failed to upload asset');
+      dispatch({ type: 'ADMIN_UPLOAD_ASSET_FAIL', payload: message });
+      return { success: false, message };
+    }
+  };
 
 export const fetchAdminReports = () => async (dispatch) => {
   dispatch({ type: 'ADMIN_REPORTS_REQUEST' });
@@ -75,33 +77,35 @@ export const fetchAdminReports = () => async (dispatch) => {
   return { success: true };
 };
 
-export const downloadUsersReport = (format = 'xlsx') => async () => {
-  try {
-    const response = await api.get(`/admin/reports/users/download?format=${format}`, {
-      responseType: 'blob',
-    });
+export const downloadUsersReport =
+  (format = 'xlsx') =>
+  async () => {
+    try {
+      const response = await api.get(`/admin/reports/users/download?format=${format}`, {
+        responseType: 'blob',
+      });
 
-    const blob = new Blob([response.data], {
-      type: response.headers['content-type'] || 'application/octet-stream',
-    });
-    const downloadUrl = window.URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
+      const blob = new Blob([response.data], {
+        type: response.headers['content-type'] || 'application/octet-stream',
+      });
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
 
-    anchor.href = downloadUrl;
-    anchor.download = `users-report.${format}`;
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    window.URL.revokeObjectURL(downloadUrl);
+      anchor.href = downloadUrl;
+      anchor.download = `users-report.${format}`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      window.URL.revokeObjectURL(downloadUrl);
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      message: getMessage(error, 'Failed to download users report'),
-    };
-  }
-};
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: getMessage(error, 'Failed to download users report'),
+      };
+    }
+  };
 
 export const fetchOffers = () => async (dispatch) => {
   dispatch({ type: 'ADMIN_OFFERS_REQUEST' });

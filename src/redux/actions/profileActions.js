@@ -31,7 +31,7 @@ export const uploadProfileImage = (file) => async (dispatch) => {
 };
 
 // Update profile
-export const updateProfile = (userId,payload) => async (dispatch) => {
+export const updateProfile = (userId, payload) => async (dispatch) => {
   dispatch({ type: 'PROFILE_UPDATE_REQUEST' });
 
   try {
