@@ -35,7 +35,7 @@ export const fetchProfile = () => async (dispatch) => {
  */
 export const fetchCsrfToken = () => async (dispatch) => {
   try {
-    const { data } = await api.get('/csrf');
+    const { data } = await api.get('/csrf', { withCredentials: true });
     dispatch({ type: 'SET_CSRF_TOKEN', payload: data.data });
     return data.data;
   } catch (error) {
