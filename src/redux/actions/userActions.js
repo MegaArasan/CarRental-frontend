@@ -16,7 +16,7 @@ const ensureCsrfToken = () => async (dispatch, getState) => {
 export const fetchProfile = () => async (dispatch) => {
   try {
     await dispatch(ensureCsrfToken());
-    const { data } = await api.get('/user/profile');
+    const { data } = await api.get('/user/profile', { withCredentials: true });
 
     dispatch({
       type: 'PROFILE_SUCCESS',
@@ -35,7 +35,7 @@ export const fetchProfile = () => async (dispatch) => {
  */
 export const fetchCsrfToken = () => async (dispatch) => {
   try {
-    const { data } = await api.get('/csrf');
+    const { data } = await api.get('/csrf', { withCredentials: true });
     dispatch({ type: 'SET_CSRF_TOKEN', payload: data.data });
     return data.data;
   } catch (error) {
@@ -52,7 +52,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
 
   try {
     await dispatch(ensureCsrfToken());
-    await api.post('/user/login', reqObj);
+    await api.post('/user/login', reqObj, { withCredentials: true });
 
     // fetch profile after login
     await dispatch(fetchProfile());
@@ -144,7 +144,7 @@ export const userResetpass = (reqObj) => async (dispatch) => {
  */
 export const userLogout = () => async (dispatch) => {
   try {
-    await api.post('/user/logout');
+    await api.post('/user/logout', {}, { withCredentials: true });
   } finally {
     dispatch({ type: 'LOGOUT' });
     window.location.href = '/login';
