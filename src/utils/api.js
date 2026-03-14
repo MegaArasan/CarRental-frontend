@@ -9,8 +9,9 @@ api.interceptors.request.use(
     const state = store.getState();
     const csrfToken = state.authReducer.csrfToken;
 
+    config.headers = config.headers ?? {};
+
     if (csrfToken) {
-      config.headers = config.headers ?? {};
       config.headers['x-csrf-token'] = csrfToken;
     }
 

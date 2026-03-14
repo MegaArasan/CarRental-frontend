@@ -16,7 +16,7 @@ const ensureCsrfToken = () => async (dispatch, getState) => {
 export const fetchProfile = () => async (dispatch) => {
   try {
     await dispatch(ensureCsrfToken());
-    const { data } = await api.get('/user/profile');
+    const { data } = await api.get('/user/profile', { withCredentials: true });
 
     dispatch({
       type: 'PROFILE_SUCCESS',
@@ -51,9 +51,8 @@ export const userLogin = (reqObj) => async (dispatch) => {
   dispatch({ type: 'LOADING', payload: true });
 
   try {
-    await dispatch(ensureCsrfToken());
     await api.post('/user/login', reqObj);
-
+    await dispatch(ensureCsrfToken());
     // fetch profile after login
     await dispatch(fetchProfile());
 
