@@ -42,7 +42,10 @@ function AdminReports() {
             </Typography>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Chip label="Restricted" sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }} />
+            <Chip
+              label="Restricted"
+              sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }}
+            />
             <Button variant="contained" color="inherit" onClick={handleDownload}>
               Download Users XLSX
             </Button>
@@ -68,7 +71,9 @@ function AdminReports() {
                     {label}
                   </Typography>
                   <Typography variant="h5" fontWeight={700} sx={{ mt: 1 }}>
-                    {label === 'Revenue' ? `₹${Number(value || 0).toLocaleString()}` : String(value ?? 0)}
+                    {label === 'Revenue'
+                      ? `₹${Number(value || 0).toLocaleString()}`
+                      : String(value ?? 0)}
                   </Typography>
                 </CardContent>
               </Card>

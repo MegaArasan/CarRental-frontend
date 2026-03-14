@@ -1,10 +1,21 @@
 import api from '../../utils/api';
 
+const ensureCsrfToken = () => async (dispatch, getState) => {
+  const existingToken = getState().authReducer.csrfToken;
+
+  if (existingToken) {
+    return existingToken;
+  }
+
+  return dispatch(fetchCsrfToken());
+};
+
 /**
  * Fetch profile (used to check login status)
  */
 export const fetchProfile = () => async (dispatch) => {
   try {
+    await dispatch(ensureCsrfToken());
     const { data } = await api.get('/user/profile');
 
     dispatch({
@@ -26,8 +37,10 @@ export const fetchCsrfToken = () => async (dispatch) => {
   try {
     const { data } = await api.get('/csrf');
     dispatch({ type: 'SET_CSRF_TOKEN', payload: data.data });
+    return data.data;
   } catch (error) {
     console.error('Failed to fetch CSRF token', error);
+    return null;
   }
 };
 
@@ -38,6 +51,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
   dispatch({ type: 'LOADING', payload: true });
 
   try {
+    await dispatch(ensureCsrfToken());
     await api.post('/user/login', reqObj);
 
     // fetch profile after login

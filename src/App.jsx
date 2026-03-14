@@ -29,8 +29,12 @@ function App() {
   const { isAuthenticated, loading } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
-    dispatch(fetchCsrfToken()); // 🔐 must run first
-    dispatch(fetchProfile()); // restore session if cookie exists
+    const bootstrapAuth = async () => {
+      await dispatch(fetchCsrfToken());
+      await dispatch(fetchProfile());
+    };
+
+    bootstrapAuth();
   }, [dispatch]);
 
   if (loading) return <CarLoader />;
@@ -62,9 +66,24 @@ function App() {
               <Route path="/booking/:carid" exact component={BookingCar} />
               <Route path="/my-bookings" exact component={UserBookings} />
               <Route path="/profile" exact component={Profile} />
-              <ProtectedRoute path="/admin/cars/new" exact component={AdminCars} allowedRoles={['admin']} />
-              <ProtectedRoute path="/admin/offers" exact component={AdminOffers} allowedRoles={['admin']} />
-              <ProtectedRoute path="/admin/reports" exact component={AdminReports} allowedRoles={['admin']} />
+              <ProtectedRoute
+                path="/admin/cars/new"
+                exact
+                component={AdminCars}
+                allowedRoles={['admin']}
+              />
+              <ProtectedRoute
+                path="/admin/offers"
+                exact
+                component={AdminOffers}
+                allowedRoles={['admin']}
+              />
+              <ProtectedRoute
+                path="/admin/reports"
+                exact
+                component={AdminReports}
+                allowedRoles={['admin']}
+              />
             </Paper>
           )}
         </Route>

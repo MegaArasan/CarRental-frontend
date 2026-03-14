@@ -10,13 +10,14 @@ api.interceptors.request.use(
     const csrfToken = state.authReducer.csrfToken;
 
     if (csrfToken) {
+      config.headers = config.headers ?? {};
       config.headers['x-csrf-token'] = csrfToken;
     }
 
     return config;
   },
   (error) => Promise.reject(error)
-)
+);
 
 api.interceptors.response.use(
   (response) => response,
@@ -26,6 +27,6 @@ api.interceptors.response.use(
     }
     return Promise.reject(error);
   }
-)
+);
 
 export default api;

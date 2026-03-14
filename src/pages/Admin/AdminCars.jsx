@@ -96,7 +96,9 @@ function AdminCars() {
       },
     };
 
-    const result = editingId ? await dispatch(updateCar(editingId, payload)) : await dispatch(addCar(payload));
+    const result = editingId
+      ? await dispatch(updateCar(editingId, payload))
+      : await dispatch(addCar(payload));
 
     if (result.success) {
       setFeedback({
@@ -142,7 +144,10 @@ function AdminCars() {
 
     if (result.success && result.assetId) {
       setForm((prev) => ({ ...prev, [field]: result.assetId }));
-      setFeedback({ type: 'success', message: `${field === 'image' ? 'Image' : 'Thumbnail'} uploaded.` });
+      setFeedback({
+        type: 'success',
+        message: `${field === 'image' ? 'Image' : 'Thumbnail'} uploaded.`,
+      });
       return;
     }
 
@@ -161,7 +166,10 @@ function AdminCars() {
               Admin-only inventory creation and update flow aligned to the backend car payload.
             </Typography>
           </div>
-          <Chip label="Admin Access" sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }} />
+          <Chip
+            label="Admin Access"
+            sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }}
+          />
         </section>
 
         <Card className="admin-card">
@@ -174,29 +182,88 @@ function AdminCars() {
 
             <Box component="form" onSubmit={handleSubmit}>
               <div className="admin-form">
-                <TextField label="Manufacturer" value={form.manufacturer} onChange={handleChange('manufacturer')} required />
-                <TextField label="Model" value={form.model} onChange={handleChange('model')} required />
-                <TextField label="Variant" value={form.variant} onChange={handleChange('variant')} />
-                <TextField select label="Fuel Type" value={form.fuelType} onChange={handleChange('fuelType')}>
+                <TextField
+                  label="Manufacturer"
+                  value={form.manufacturer}
+                  onChange={handleChange('manufacturer')}
+                  required
+                />
+                <TextField
+                  label="Model"
+                  value={form.model}
+                  onChange={handleChange('model')}
+                  required
+                />
+                <TextField
+                  label="Variant"
+                  value={form.variant}
+                  onChange={handleChange('variant')}
+                />
+                <TextField
+                  select
+                  label="Fuel Type"
+                  value={form.fuelType}
+                  onChange={handleChange('fuelType')}
+                >
                   <MenuItem value="Petrol">Petrol</MenuItem>
                   <MenuItem value="Diesel">Diesel</MenuItem>
                   <MenuItem value="Electric">Electric</MenuItem>
                   <MenuItem value="Hybrid">Hybrid</MenuItem>
                 </TextField>
-                <TextField select label="Transmission" value={form.transmission} onChange={handleChange('transmission')}>
+                <TextField
+                  select
+                  label="Transmission"
+                  value={form.transmission}
+                  onChange={handleChange('transmission')}
+                >
                   <MenuItem value="Manual">Manual</MenuItem>
                   <MenuItem value="Automatic">Automatic</MenuItem>
                 </TextField>
-                <TextField label="Seats" type="number" value={form.capacity} onChange={handleChange('capacity')} />
-                <TextField label="Rent / Hour" type="number" value={form.rentPerHour} onChange={handleChange('rentPerHour')} required />
-                <TextField label="Segment" value={form.segment} onChange={handleChange('segment')} />
-                <TextField select label="Status" value={form.status} onChange={handleChange('status')}>
+                <TextField
+                  label="Seats"
+                  type="number"
+                  value={form.capacity}
+                  onChange={handleChange('capacity')}
+                />
+                <TextField
+                  label="Rent / Hour"
+                  type="number"
+                  value={form.rentPerHour}
+                  onChange={handleChange('rentPerHour')}
+                  required
+                />
+                <TextField
+                  label="Segment"
+                  value={form.segment}
+                  onChange={handleChange('segment')}
+                />
+                <TextField
+                  select
+                  label="Status"
+                  value={form.status}
+                  onChange={handleChange('status')}
+                >
                   <MenuItem value="active">Active</MenuItem>
                   <MenuItem value="inactive">Inactive</MenuItem>
                 </TextField>
-                <TextField label="City" value={form.city} onChange={handleChange('city')} required />
-                <TextField label="State" value={form.state} onChange={handleChange('state')} required />
-                <TextField label="Country" value={form.country} onChange={handleChange('country')} required />
+                <TextField
+                  label="City"
+                  value={form.city}
+                  onChange={handleChange('city')}
+                  required
+                />
+                <TextField
+                  label="State"
+                  value={form.state}
+                  onChange={handleChange('state')}
+                  required
+                />
+                <TextField
+                  label="Country"
+                  value={form.country}
+                  onChange={handleChange('country')}
+                  required
+                />
                 <TextField
                   label="Image Asset ID"
                   value={form.image}
@@ -214,11 +281,21 @@ function AdminCars() {
               <div className="admin-actions">
                 <Button component="label" variant="outlined" disabled={uploadingAsset}>
                   {uploadTarget === 'image' ? 'Uploading Image...' : 'Upload Image'}
-                  <input hidden type="file" accept="image/*" onChange={handleAssetUpload('image')} />
+                  <input
+                    hidden
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAssetUpload('image')}
+                  />
                 </Button>
                 <Button component="label" variant="outlined" disabled={uploadingAsset}>
                   {uploadTarget === 'thumbnail' ? 'Uploading Thumbnail...' : 'Upload Thumbnail'}
-                  <input hidden type="file" accept="image/*" onChange={handleAssetUpload('thumbnail')} />
+                  <input
+                    hidden
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAssetUpload('thumbnail')}
+                  />
                 </Button>
                 <Button
                   variant="outlined"
@@ -270,7 +347,9 @@ function AdminCars() {
                           <TableCell>{car.model || '-'}</TableCell>
                           <TableCell>{car.variant || '-'}</TableCell>
                           <TableCell>{car.rentPerHour || '-'}</TableCell>
-                          <TableCell sx={{ textTransform: 'capitalize' }}>{car.status || 'active'}</TableCell>
+                          <TableCell sx={{ textTransform: 'capitalize' }}>
+                            {car.status || 'active'}
+                          </TableCell>
                           <TableCell align="right">
                             <IconButton size="small" onClick={() => handleEdit(car)}>
                               <EditOutlinedIcon fontSize="small" />

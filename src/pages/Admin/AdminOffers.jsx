@@ -120,7 +120,10 @@ function AdminOffers() {
               Create, update, and remove promotional offers.
             </Typography>
           </div>
-          <Chip label={`${offers.length} offers`} sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }} />
+          <Chip
+            label={`${offers.length} offers`}
+            sx={{ alignSelf: 'flex-start', bgcolor: '#fff', color: '#991b1b' }}
+          />
         </section>
 
         <Card className="admin-card" sx={{ mb: 3 }}>
@@ -133,8 +136,18 @@ function AdminOffers() {
 
             <Box component="form" onSubmit={handleSubmit}>
               <div className="admin-form">
-                <TextField label="Title" value={form.title} onChange={handleChange('title')} required />
-                <TextField select label="Discount Type" value={form.discountType} onChange={handleChange('discountType')}>
+                <TextField
+                  label="Title"
+                  value={form.title}
+                  onChange={handleChange('title')}
+                  required
+                />
+                <TextField
+                  select
+                  label="Discount Type"
+                  value={form.discountType}
+                  onChange={handleChange('discountType')}
+                >
                   <MenuItem value="percentage">Percentage</MenuItem>
                   <MenuItem value="flat">Flat</MenuItem>
                 </TextField>
@@ -151,7 +164,11 @@ function AdminOffers() {
                   value={form.minDays}
                   onChange={handleChange('minDays')}
                 />
-                <TextField label="Promo Code" value={form.promoCode} onChange={handleChange('promoCode')} />
+                <TextField
+                  label="Promo Code"
+                  value={form.promoCode}
+                  onChange={handleChange('promoCode')}
+                />
                 <TextField
                   label="Start Date"
                   type="date"
@@ -223,7 +240,9 @@ function AdminOffers() {
                     control={
                       <Checkbox
                         checked={form.isActive}
-                        onChange={(event) => setForm((prev) => ({ ...prev, isActive: event.target.checked }))}
+                        onChange={(event) =>
+                          setForm((prev) => ({ ...prev, isActive: event.target.checked }))
+                        }
                       />
                     }
                     label="Active"
@@ -286,7 +305,9 @@ function AdminOffers() {
                             {offer.discountValue}
                             {offer.discountType === 'percentage' ? '%' : ''}
                           </TableCell>
-                          <TableCell>{offer.isGlobal ? 'Global' : `${offer.carIds?.length || 0} cars`}</TableCell>
+                          <TableCell>
+                            {offer.isGlobal ? 'Global' : `${offer.carIds?.length || 0} cars`}
+                          </TableCell>
                           <TableCell>{offer.isActive ? 'Yes' : 'No'}</TableCell>
                           <TableCell align="right">
                             <div className="admin-table-actions">
