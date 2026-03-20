@@ -60,6 +60,7 @@ function Products() {
 
   // Redux slices
   const { cars, loading: carsLoading } = useSelector((state) => state.carsReducer);
+  const { isAuthenticated } = useSelector((state) => state.authReducer);
   const { makeModel = {}, loading: makeModelLoading = false } = useSelector(
     (state) => state.carsReducer || {}
   );
@@ -74,14 +75,14 @@ function Products() {
 
   // Fetch cars + make-model on mount
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      history.push('/');
+    if (!isAuthenticated) {
+      history.replace('/login');
       return;
     }
+
     dispatch(getAllCars());
     dispatch(getAllMakeModel());
-  }, [dispatch, history]);
+  }, [dispatch, history, isAuthenticated]);
 
   // Filter cars dynamically
   const filteredCars = useMemo(() => {
